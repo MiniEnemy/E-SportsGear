@@ -1,0 +1,28 @@
+﻿@model Category
+
+<form method="post" class="bg-light shadow-sm p-4 rounded">
+    <input asp-for="Id" hidden />
+    <h2 class="text-danger mb-4">Delete Category</h2>
+    <p class="mb-3 text-muted">Are you sure you want to delete this category?</p>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Category Name</label>
+        <input asp-for="Name" class="form-control" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Display Order</label>
+        <input asp-for="DisplayOrder" class="form-control" disabled />
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill shadow-sm">Delete</button>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-secondary px-4 py-2 rounded-pill shadow-sm">
+            Cancel
+        </a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
