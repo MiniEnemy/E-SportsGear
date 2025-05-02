@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace E_SportsGearHub.Migrations
+namespace ESports_DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class AddCategoryTableToDB : Migration

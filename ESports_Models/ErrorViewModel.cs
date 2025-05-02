@@ -1,4 +1,4 @@
-namespace E_SportsGearHub.Models
+namespace ESports_Models
 {
     public class ErrorViewModel
     {

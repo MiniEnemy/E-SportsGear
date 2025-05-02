@@ -1,0 +1,99 @@
+﻿@model List<Category>
+
+<div class="container">
+    <div class="row pt-4 pb-3 align-items-center">
+        <div class="col-md-6">
+            <h2 class="fw-bold">
+                <i class="bi bi-list-ul text-primary me-2"></i> Category List
+            </h2>
+        </div>
+        <div class="col-md-6 text-end">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-success shadow-sm">
+                <i class="bi bi-plus-circle-fill me-1"></i> Create New Category
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr class="bg-light text-dark">
+                        <th class="fw-bold ps-4" style="width: 60%">Category Name</th>
+                        <th class="fw-bold text-center" style="width: 20%">Display Order</th>
+                        <th class="fw-bold text-center" style="width: 20%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Model.OrderBy(u => u.DisplayOrder))
+                    {
+                        <tr>
+                            <td class="align-middle ps-4">
+                                <span class="fw-semibold text-primary">@obj.Name</span>
+                            </td>
+                            <td class="align-middle text-center">@obj.DisplayOrder</td>
+                            <td class="align-middle text-center">
+                                <div class="btn-group" role="group">
+                                    <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id"
+                                       class="btn btn-outline-warning btn-sm mx-1" title="Edit this category">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id"
+                                       class="btn btn-outline-danger btn-sm mx-1" title="Delete this category">
+                                        <i class="bi bi-trash-fill"></i> Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    h2 {
+        letter-spacing: 0.5px;
+    }
+
+    .table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        .table thead th {
+            border-top: none;
+            border-bottom: 2px solid #dee2e6;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(13, 110, 253, 0.04);
+        }
+
+    .btn-outline-warning {
+        border-width: 1.5px;
+        color: #ffc107;
+        border-color: #ffc107;
+    }
+
+        .btn-outline-warning:hover {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+    .btn-outline-danger {
+        border-width: 1.5px;
+    }
+
+    .btn-group .btn {
+        border-radius: 4px;
+        padding: 5px 10px;
+        font-weight: 500;
+    }
+</style>

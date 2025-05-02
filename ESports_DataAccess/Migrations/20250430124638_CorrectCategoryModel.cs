@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace E_SportsGearHub.Migrations
+namespace ESports_DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class CorrectCategoryModel : Migration

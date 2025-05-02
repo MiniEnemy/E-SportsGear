@@ -1,11 +1,13 @@
 using System.Diagnostics;
-using E_SportsGearHub.Models;
+using ESports_Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace E_SportsGearHub.Controllers
+namespace E_SportsGearHub.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
+        
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
