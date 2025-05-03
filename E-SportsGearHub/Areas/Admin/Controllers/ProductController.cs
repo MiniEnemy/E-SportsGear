@@ -1,7 +1,10 @@
 ﻿using ESports_DataAccess.Data;
+using ESports_DataAccess.Repository;
 using ESports_DataAccess.Repository.IRepository;
 using ESports_Models;
+using ESports_Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace E_SportsGearHub.Areas.Admin.Controllers
 {
@@ -9,10 +12,11 @@ namespace E_SportsGearHub.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _UnitOfWork;
-
-        public ProductController(IUnitOfWork UnitOfWork)
+        private readonly IWebHostEnvironment _webhostEnvironment; 
+        public ProductController(IUnitOfWork UnitOfWork,IWebHostEnvironment webHostEnvironment)
         {
             _UnitOfWork = UnitOfWork;
+            _webhostEnvironment = webHostEnvironment;
         }
 
         // GET: Product/Index
@@ -23,57 +27,69 @@ namespace E_SportsGearHub.Areas.Admin.Controllers
         }
 
         // GET: Product/Create
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            return View();
+            ProductVM productVM = new()
+            {
+                CategoryList = _UnitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+
+                Product = new Product()
+            };
+            if(id == null|| id==0)
+            {
+                //create
+                return View(productVM);
+            }
+            else
+            {
+                //update
+                productVM.Product = _UnitOfWork.Product.Get(u => u.Id == id);
+                return View(productVM);
+            }
+           //
         }
+        
+
 
         // POST: Product/Create
         [HttpPost]
-        public IActionResult Create(Product obj)
+        public IActionResult Upsert(ProductVM productVM,IFormFile? file )
         {         
             if (ModelState.IsValid)
             {
-                _UnitOfWork.Product.Add(obj);
+                string wwwRootPath = _webhostEnvironment.WebRootPath;
+                if (file != null)
+                { string fileName = Guid.NewGuid().ToString()+Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"Images\Product");
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    productVM.Product.ImageUrl = @"\Images\Product\" + fileName;
+                }
+
+                _UnitOfWork.Product.Add(productVM.Product);
                 _UnitOfWork.Save();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
-
-            return View();
-        }
-
-        // GET: Product/Edit/{id}
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
+            else
             {
-                return NotFound();
+                productVM.CategoryList = _UnitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(productVM);
             }
 
-            Product productFromDb = _UnitOfWork.Product.Get(u=>u.Id==id);
-            if (productFromDb == null)
-            {
-                return NotFound();
-            }
-
-            return View(productFromDb);
+               
         }
 
-        // POST: Product/Edit
-        [HttpPost]
-        public IActionResult Edit(Product obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _UnitOfWork.Product.Update(obj);
-                _UnitOfWork.Save();
-                TempData["success"] = "Product updated successfully";
-                return RedirectToAction("Index");
-            }
-
-            return View();
-        }
 
         // GET: Product/Delete/{id}
         public IActionResult Delete(int? id)

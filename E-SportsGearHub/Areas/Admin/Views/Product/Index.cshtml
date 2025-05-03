@@ -8,7 +8,7 @@
             </h2>
         </div>
         <div class="col-md-6 text-end">
-            <a asp-controller="Product" asp-action="Create" class="btn btn-success shadow-sm">
+            <a asp-controller="Product" asp-action="Upsert" class="btn btn-success shadow-sm">
                 <i class="bi bi-plus-circle-fill me-1"></i> Create New Product
             </a>
         </div>
@@ -21,7 +21,8 @@
                     <tr class="bg-light text-dark">
                         <th class="fw-bold ps-4" style="width: 20%">Product Name</th>
                         <th class="fw-bold" style="width: 15%">Company</th>
-                        <th class="fw-bold" style="width: 35%">Description</th>
+                        <th class="fw-bold" style="width: 45%">Description</th>
+                        <th class="fw-bold" style="width: 15%">Category</th>
                         <th class="fw-bold" style="width: 10%">Price</th>
                         <th class="fw-bold text-center" style="width: 20%">Actions</th>
                     </tr>
@@ -39,12 +40,15 @@
                             <td class="align-middle description-cell">
                                 <div class="description-text">@obj.Description</div>
                             </td>
+                            <td class="align-middle description-cell">
+                                <div class="description-text">@obj.Category</div>
+                            </td>
                             <td class="align-middle">
                                 <span class="fw-bold">$@obj.Price</span>
                             </td>
                             <td class="align-middle text-center">
                                 <div class="btn-group" role="group">
-                                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id"
+                                    <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id"
                                        class="btn btn-outline-primary btn-sm mx-1" title="Edit this product">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </a>

@@ -3,6 +3,7 @@ using ESports_DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESports_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250502172152_addForeignKeyForCategoryProductionRelation")]
+    partial class addForeignKeyForCategoryProductionRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,16 +83,13 @@ namespace ESports_DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ProductName");
 
                     b.HasKey("Id");
 
@@ -104,7 +104,6 @@ namespace ESports_DataAccess.Migrations
                             CategoryId = 1,
                             CompanyName = "Razer",
                             Description = "Ergonomic gaming mouse with high-precision 20K DPI optical sensor and customizable RGB lighting.",
-                            ImageUrl = "",
                             Price = 900.0,
                             ProductName = "Razer DeathAdder V2"
                         },
@@ -114,7 +113,6 @@ namespace ESports_DataAccess.Migrations
                             CategoryId = 2,
                             CompanyName = "SteelSeries",
                             Description = "Mechanical gaming keyboard with adjustable actuation and OLED smart display.",
-                            ImageUrl = "",
                             Price = 1800.0,
                             ProductName = "SteelSeries Apex Pro"
                         },
@@ -124,7 +122,6 @@ namespace ESports_DataAccess.Migrations
                             CategoryId = 3,
                             CompanyName = "Logitech",
                             Description = "High-performance wired gaming headset with Blue Voice microphone technology and 7.1 surround sound.",
-                            ImageUrl = "",
                             Price = 1200.0,
                             ProductName = "Logitech G Pro X"
                         },
@@ -134,7 +131,6 @@ namespace ESports_DataAccess.Migrations
                             CategoryId = 2,
                             CompanyName = "Corsair",
                             Description = "Anti-fray cloth gaming mousepad with superior control and glide optimization for competitive play.",
-                            ImageUrl = "",
                             Price = 3500.0,
                             ProductName = "Corsair MM300 Mousepad"
                         },
@@ -144,7 +140,6 @@ namespace ESports_DataAccess.Migrations
                             CategoryId = 3,
                             CompanyName = "HyperX",
                             Description = "Comfortable gaming headset with 53mm drivers, virtual 7.1 surround sound, and noise-canceling mic.",
-                            ImageUrl = "",
                             Price = 1000.0,
                             ProductName = "HyperX Cloud II"
                         },
@@ -154,7 +149,6 @@ namespace ESports_DataAccess.Migrations
                             CategoryId = 2,
                             CompanyName = "ASUS",
                             Description = "Gaming mechanical keyboard with ROG RX optical switches, RGB lighting, and IP57 water resistance.",
-                            ImageUrl = "",
                             Price = 1300.0,
                             ProductName = "ASUS ROG Strix Scope RX"
                         });
