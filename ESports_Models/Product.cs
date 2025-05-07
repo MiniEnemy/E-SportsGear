@@ -22,17 +22,19 @@ namespace ESports_Models
             [Required]
             public string Description { get; set; }
 
-            public int CategoryId { get; set; }
-            [ForeignKey("CategoryId")]
-        [ValidateNever]
-        public Category Category { get; set; }
+            
 
             [Required]
             [DisplayName("Price (NPR)")]
             [Range(1, 100000, ErrorMessage = "Price must be between NPR 1 and 100,000")]
             public double Price { get; set; }
+
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
         [ValidateNever]
-            public string ImageUrl { get; set; }
+        public Category Category { get; set; }
+        [ValidateNever]
+        public string ImageUrl { get; set; }
           
        
         }

@@ -16,7 +16,7 @@
 
     <div class="card shadow-sm mb-4">
         <div class="card-body p-0">
-            <table class="table table-hover mb-0">
+            <table id="tblData"class="table table-hover mb-0" style="width:100%">
                 <thead>
                     <tr class="bg-light text-dark">
                         <th class="fw-bold ps-4" style="width: 20%">Product Name</th>
@@ -27,40 +27,6 @@
                         <th class="fw-bold text-center" style="width: 20%">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var obj in Model)
-                    {
-                        <tr>
-                            <td class="align-middle ps-4">
-                                <span class="fw-bold text-primary">@obj.ProductName</span>
-                            </td>
-                            <td class="align-middle">
-                                <span class="badge bg-light text-dark border">@obj.CompanyName</span>
-                            </td>
-                            <td class="align-middle description-cell">
-                                <div class="description-text">@obj.Description</div>
-                            </td>
-                            <td class="align-middle description-cell">
-                                <div class="description-text">@obj.Category</div>
-                            </td>
-                            <td class="align-middle">
-                                <span class="fw-bold">$@obj.Price</span>
-                            </td>
-                            <td class="align-middle text-center">
-                                <div class="btn-group" role="group">
-                                    <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id"
-                                       class="btn btn-outline-primary btn-sm mx-1" title="Edit this product">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </a>
-                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id"
-                                       class="btn btn-outline-danger btn-sm mx-1" title="Delete this product">
-                                        <i class="bi bi-trash-fill"></i> Delete
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
             </table>
         </div>
     </div>
@@ -124,3 +90,6 @@
         font-size: 12px;
     }
 </style>
+@section Scripts{
+    <script src="~/js/product.js"></script>
+}

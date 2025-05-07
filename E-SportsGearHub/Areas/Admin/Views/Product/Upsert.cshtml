@@ -1,57 +1,69 @@
-﻿@model ESports_Models.ViewModels.ProductVM
+﻿@model ProductVM
 
 <form method="post" class="bg-light shadow-sm p-4 rounded" enctype="multipart/form-data">
     <input asp-for="Product.Id" type="hidden" />
+    <input asp-for="Product.ImageUrl" type="hidden" />
+    <div class="row">
+        <div class="col-10">
+            <h2 class="text-primary mb-4">@(Model.Product.Id != 0 ? "Update" : "Create") Product</h2>
 
-    <!-- Fix: Proper conditional Razor syntax -->
-    <h2 class="text-primary mb-4">@(Model.Product.Id == 0 ? "Create" : "Update")   Product</h2>
+            <div class="mb-3">
+                <label asp-for="Product.ProductName" class="form-label fw-bold"></label>
+                <input asp-for="Product.ProductName" class="form-control" placeholder="Enter product name" />
+                <span asp-validation-for="Product.ProductName" class="text-danger small"></span>
+            </div>
 
-    <div class="mb-3">
-        <label asp-for="Product.ProductName" class="form-label fw-bold"></label>
-        <input asp-for="Product.ProductName" class="form-control" placeholder="Enter product name" />
-        <span asp-validation-for="Product.ProductName" class="text-danger small"></span>
-    </div>
+            <div class="mb-3">
+                <label asp-for="Product.CompanyName" class="form-label fw-bold"></label>
+                <input asp-for="Product.CompanyName" class="form-control" placeholder="Enter Company Name" />
+                <span asp-validation-for="Product.CompanyName" class="text-danger small"></span>
+            </div>
 
-    <div class="mb-3">
-        <label asp-for="Product.CompanyName" class="form-label fw-bold"></label>
-        <input asp-for="Product.CompanyName" class="form-control" placeholder="Enter Company Name" />
-        <span asp-validation-for="Product.CompanyName" class="text-danger small"></span>
-    </div>
+            <div class="mb-3">
+                <label asp-for="Product.Description" class="form-label fw-bold text-muted"></label>
+                <textarea asp-for="Product.Description" class="form-control" placeholder="Enter Description"></textarea>
+                <span asp-validation-for="Product.Description" class="text-danger small"></span>
+            </div>
 
-    <div class="mb-3">
-        <label asp-for="Product.Description" class="form-label fw-bold" text-muted></label>
-        <textarea asp-for="Product.Description" class="form-control" placeholder="Enter Description"></textarea>
-        <span asp-validation-for="Product.Description" class="text-danger small"></span>
-    </div>
+            <div class="mb-3">
+                <label asp-for="Product.CategoryId" class="form-label fw-bold"></label>
+                <select asp-for="Product.CategoryId" asp-items="Model.CategoryList" class="form-select">
+                    <option disabled value="">-- Select Category --</option>
+                </select>
+                <span asp-validation-for="Product.CategoryId" class="text-danger small"></span>
+            </div>
 
-    <div class="mb-3">
-        <label asp-for="Product.CategoryId" class="form-label fw-bold"></label>
-        <select asp-for="Product.CategoryId" asp-items="Model.CategoryList" class="form-select">
-            <option disabled selected>-- Select Category --</option>
-        </select>
-        <span asp-validation-for="Product.CategoryId" class="text-danger small"></span>
-    </div>
+            <div class="mb-3">
+                <label asp-for="Product.ImageUrl" class="form-label fw-bold"></label>
+                <input type="file" name="file" class="form-control" />
+                <span asp-validation-for="Product.ImageUrl" class="text-danger small"></span>
+            </div>
 
-    <div class="mb-3">
-        <label asp-for="Product.Price" class="form-label fw-bold"></label>
-        <input asp-for="Product.Price" class="form-control" placeholder="Enter Price" />
-        <span asp-validation-for="Product.Price" class="text-danger small"></span>
-    </div>
+            <div class="mb-3">
+                <label asp-for="Product.Price" class="form-label fw-bold"></label>
+                <input asp-for="Product.Price" class="form-control" placeholder="Enter Price" />
+                <span asp-validation-for="Product.Price" class="text-danger small"></span>
+            </div>
 
-    <div class="mb-3">
-        <label asp-for="Product.ImageUrl" class="form-label fw-bold"></label>
-        <input type="file" name="file" class="form-control" />
-        <span asp-for="Product.ImageUrl" class="text-danger small"></span>
-    </div>
+            <div class="d-flex justify-content-between mt-4">
+                @if (Model.Product.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">Update</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">Create</button>
+                }
 
-    <div class="d-flex justify-content-between mt-4">
-        <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
-            @(Model.Product.Id == 0 ? "Create" : "Update")
-        </button>
+                <a asp-controller="Product" asp-action="Index" class="btn btn-secondary px-4 py-2 rounded-pill shadow-sm">
+                    Back to List
+                </a>
+            </div>
+        </div>
 
-        <a asp-controller="Product" asp-action="Index" class="btn btn-secondary px-4 py-2 rounded-pill shadow-sm">
-            Back to List
-        </a>
+        <div class="col-2">
+            <img src="@Model.Product.ImageUrl" style="width:100%; border-radius:5px; border:1px solid #bbb9b9" />
+        </div>
     </div>
 </form>
 
