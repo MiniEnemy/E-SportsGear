@@ -11,7 +11,7 @@ namespace ESports_Models
     public class ApplicationUser:IdentityUser
     {
         [Required]
-        public int Name { get; set; }
+        public String Name { get; set; }
 
         public string? StreetAddress { get; set; }
         public string? City { get; set; }

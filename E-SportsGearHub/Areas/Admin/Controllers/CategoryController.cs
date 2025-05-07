@@ -1,11 +1,14 @@
 ﻿using ESports_DataAccess.Data;
 using ESports_DataAccess.Repository.IRepository;
 using ESports_Models;
+using ESports_Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_SportsGearHub.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles =Sd.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _UnitOfWork;
