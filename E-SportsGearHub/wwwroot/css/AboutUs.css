@@ -1,0 +1,58 @@
+﻿body {
+    background-color: #151a30;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.about-section {
+    background-color: #2a3354;
+    color: #b8b8b8;
+    padding: 40px 30px;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.15);
+}
+
+h1, h2 {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+
+.glow-heading {
+    color: #ffffff;
+    text-shadow: 0 0 10px #00e5ff;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.intro {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+.content h2 {
+    margin-top: 30px;
+    font-size: 22px;
+    color: #00e5ff;
+}
+
+.content ul {
+    list-style: square;
+    padding-left: 20px;
+}
+
+.contact {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 2px solid #00e5ff;
+}
+
+.contact-info p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #ffffff;
+}

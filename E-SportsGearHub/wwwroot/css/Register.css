@@ -1,0 +1,124 @@
+
+
+.register-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.card {
+    border-radius: 1rem;
+    background-color: #1a1d2e;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #00bcd4;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.form-section {
+    padding: 2rem;
+}
+
+.form-floating > .form-control {
+    padding: 1rem 0.75rem;
+    background-color: #262b3f;
+    color: #fff;
+    border: none;
+}
+
+.form-floating > label {
+    padding: 1rem 0.75rem;
+    color: #aaa;
+}
+
+.btn-register {
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    background-color: #00bcd4;
+    border: none;
+    transition: all 0.3s ease;
+    font-family: 'Orbitron', sans-serif;
+}
+
+    .btn-register:hover {
+        background-color: #0097a7;
+        transform: translateY(-2px);
+        box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.2);
+    }
+
+.input-icon {
+    position: absolute;
+    right: 1rem;
+    top: 1.1rem;
+    color: #6c757d;
+}
+
+.external-login {
+    background-color: #151827;
+    padding: 2rem;
+    border-radius: 1rem;
+    color: #fff;
+}
+
+.section-divider {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+}
+
+    .section-divider hr {
+        flex-grow: 1;
+        border-top: 1px solid #444;
+    }
+
+    .section-divider span {
+        padding: 0 1rem;
+        color: #ccc;
+        font-weight: 500;
+    }
+
+.form-floating {
+    position: relative;
+}
+
+.form-section h2 {
+    margin-bottom: 1.5rem;
+    color: #00bcd4;
+    font-weight: 600;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.social-btn {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.validation-summary {
+    background-color: #ffccd5;
+    border: 1px solid #f5c2c7;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #000;
+}
+
+.validation-error {
+    color: #ff6b6b;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}

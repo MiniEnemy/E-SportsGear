@@ -1,0 +1,72 @@
+﻿@inject SignInManager<IdentityUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+<ul class="nav flex-column neon-nav">
+    <li class="nav-item">
+        <a class="nav-link orbitron text-white @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">
+            <i class="bi bi-person-circle me-2"></i> Profile
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link orbitron @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">
+            <i class="bi bi-envelope-open me-2"></i> Email
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link orbitron @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">
+            <i class="bi bi-shield-lock me-2"></i> Password
+        </a>
+    </li>
+    @if (hasExternalLogins)
+    {
+        <li class="nav-item">
+            <a class="nav-link orbitron @ManageNavPages.ExternalLoginsNavClass(ViewContext)" id="external-login" asp-page="./ExternalLogins">
+                <i class="bi bi-box-arrow-in-right me-2"></i> External Logins
+            </a>
+        </li>
+    }
+    <li class="nav-item">
+        <a class="nav-link orbitron @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">
+            <i class="bi bi-shield-lock-fill me-2"></i> Two-Factor Auth
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link orbitron @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">
+            <i class="bi bi-fingerprint me-2"></i> Personal Data
+        </a>
+    </li>
+</ul>
+
+<style>
+    .neon-nav .nav-link {
+        color: #b8b8b8;
+        background-color: #2a3354;
+        margin-bottom: 8px;
+        padding: 12px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+        .neon-nav .nav-link.active,
+        .neon-nav .nav-link:hover {
+            color: #00e5ff;
+            background-color: #151a30;
+            box-shadow: 0 0 10px #00e5ff;
+            transform: translateY(-1px);
+        }
+
+    .neon-nav .bi {
+        font-size: 1rem;
+        vertical-align: middle;
+    }
+
+    .orbitron {
+        font-family: 'Orbitron', sans-serif;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+</style>
