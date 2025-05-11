@@ -1,0 +1,55 @@
+﻿@* @model Product *@
+<form method="post">
+    <div class="product-container mt-4">
+        <div class="product-header">
+            <h1 class="product-title">@Model.ProductName</h1>
+            <p class="product-category">@Model.Category.Name</p>
+            <div class="cyber-separator"></div>
+        </div>
+
+        <div class="content-area">  
+            <div class="back-button-container">
+                <a asp-action="Index" class="back-button">
+                    <i class="fas fa-chevron-left"></i> BACK TO BROWSE
+                </a>
+            </div>
+
+            <div class="product-content">
+                <div class="product-image-container">
+                    <img src="@Model.ImageUrl" class="product-image" alt="@Model.ProductName" />
+                    @* @if (Model.IsFeatured) *@
+                    @* { *@
+                    @*     <div class="hot-badge">HOT</div> *@
+                    @* } *@
+                </div>
+
+                <div class="product-details">
+                    <div class="product-description">
+                        <div class="description-marker"></div>
+                        <p>@Html.Raw(Model.Description)</p>
+                    </div>
+
+                    <div class="price-container">
+                        <span class="price-label">$@Model.Price.ToString("F2")</span>
+                    </div>
+
+                    <div class="quantity-container">
+                        <div class="quantity-selector">
+                            <label class="quantity-label">QTY</label>
+                            <input type="number" name="count" value="1" min="1" class="quantity-input" />
+                        </div>
+                    </div>
+
+                    <div class="cart-button-container">
+                        <button type="submit" class="add-to-cart-button">
+                            <i class="fas fa-shopping-cart"></i> ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<link rel="stylesheet" href="~/css/Details.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />

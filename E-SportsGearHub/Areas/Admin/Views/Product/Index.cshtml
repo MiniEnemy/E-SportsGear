@@ -3,102 +3,107 @@
 <div class="container">
     <div class="row pt-4 pb-3 align-items-center">
         <div class="col-md-6">
-            <h2 class="fw-bold">
-                <i class="bi bi-joystick text-primary me-2"></i> Gaming Products
+            <h2 class="fw-bold orbitron text-white">
+                <i class="bi bi-joystick me-2" style="color: #00e5ff;"></i> Gaming Products
             </h2>
         </div>
         <div class="col-md-6 text-end">
-            <a asp-controller="Product" asp-action="Create" class="btn btn-success shadow-sm">
+            <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary neon-btn shadow-sm">
                 <i class="bi bi-plus-circle-fill me-1"></i> Create New Product
             </a>
         </div>
     </div>
 
-    <div class="card shadow-sm mb-4">
+    <div class="card bg-dark border border-secondary shadow-sm mb-4">
         <div class="card-body p-0">
-            <table class="table table-hover mb-0">
+            <table id="tblData" class="table table-dark table-hover mb-0" style="width:100%">
                 <thead>
-                    <tr class="bg-light text-dark">
-                        <th class="fw-bold ps-4" style="width: 20%">Product Name</th>
-                        <th class="fw-bold" style="width: 15%">Company</th>
-                        <th class="fw-bold" style="width: 35%">Description</th>
-                        <th class="fw-bold" style="width: 10%">Price</th>
-                        <th class="fw-bold text-center" style="width: 20%">Actions</th>
+                    <tr style="background-color: #2a3354;">
+                        <th class="fw-bold ps-4 orbitron text-white" style="width: 20%">Product Name</th>
+                        <th class="fw-bold orbitron text-white" style="width: 15%">Company</th>
+                        <th class="fw-bold orbitron text-white" style="width: 45%">Description</th>
+                        <th class="fw-bold orbitron text-white" style="width: 10%">Price</th>
+                        <th class="fw-bold orbitron text-white" style="width: 15%">Category</th>
+                        <th class="fw-bold orbitron text-center text-white" style="width: 20%">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var obj in Model)
-                    {
-                        <tr>
-                            <td class="align-middle ps-4">
-                                <span class="fw-bold text-primary">@obj.ProductName</span>
-                            </td>
-                            <td class="align-middle">
-                                <span class="badge bg-light text-dark border">@obj.CompanyName</span>
-                            </td>
-                            <td class="align-middle description-cell">
-                                <div class="description-text">@obj.Description</div>
-                            </td>
-                            <td class="align-middle">
-                                <span class="fw-bold">$@obj.Price</span>
-                            </td>
-                            <td class="align-middle text-center">
-                                <div class="btn-group" role="group">
-                                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id"
-                                       class="btn btn-outline-primary btn-sm mx-1" title="Edit this product">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </a>
-                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id"
-                                       class="btn btn-outline-danger btn-sm mx-1" title="Delete this product">
-                                        <i class="bi bi-trash-fill"></i> Delete
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
             </table>
         </div>
     </div>
 </div>
 
 <style>
-    /* Clean, subtle gaming-inspired styling */
-    h2 {
-        letter-spacing: 0.5px;
+    body {
+        background-color: #151a30;
+        font-family: 'Rajdhani', sans-serif;
+        color: #ffffff;
     }
 
-    .table {
-        border-collapse: separate;
-        border-spacing: 0;
+    .orbitron {
+        font-family: 'Orbitron', sans-serif;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
 
-        .table thead th {
-            border-top: none;
-            border-bottom: 2px solid #dee2e6;
-            text-transform: uppercase;
-            font-size: 14px;
+    .neon-btn {
+        background-color: #00e5ff;
+        border-color: #00e5ff;
+        color: #151a30;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .neon-btn:hover {
+            background-color: #00a8e8;
+            border-color: #00a8e8;
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px #00e5ff;
+        }
+
+    .table-dark {
+        background-color: transparent;
+    }
+
+        .table-dark thead th {
+            border-bottom: 2px solid #00e5ff;
+            font-size: 13px;
             letter-spacing: 0.5px;
-            padding-top: 16px;
-            padding-bottom: 16px;
         }
 
-        .table tbody tr:hover {
-            background-color: rgba(13, 110, 253, 0.04);
+        .table-dark tbody tr:hover {
+            background-color: rgba(0, 229, 255, 0.08);
         }
+
+    .card {
+        background-color: rgba(42, 51, 84, 0.8);
+        border-radius: 8px;
+    }
 
     .btn-outline-primary {
-        border-width: 1.5px;
+        border-color: #00e5ff;
+        color: #00e5ff;
+        font-weight: 500;
     }
+
+        .btn-outline-primary:hover {
+            background-color: #00e5ff;
+            color: #151a30;
+        }
 
     .btn-outline-danger {
-        border-width: 1.5px;
+        border-color: #ff3860;
+        color: #ff3860;
+        font-weight: 500;
     }
 
+        .btn-outline-danger:hover {
+            background-color: #ff3860;
+            color: #000;
+        }
+
     .btn-group .btn {
-        border-radius: 4px;
+        border-radius: 8px;
         padding: 5px 10px;
-        font-weight: 500;
     }
 
     .description-cell {
@@ -112,11 +117,20 @@
         overflow: hidden;
         text-overflow: ellipsis;
         font-size: 14px;
+        color: #b8b8b8;
     }
 
     .badge {
         font-weight: 500;
         padding: 6px 10px;
         font-size: 12px;
+        background-color: #2a3354;
+        color: #00e5ff;
+        border: 1px solid #00e5ff;
+        border-radius: 6px;
     }
 </style>
+
+@section Scripts {
+    <script src="~/js/product.js"></script>
+}

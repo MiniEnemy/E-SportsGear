@@ -1,0 +1,218 @@
+﻿/* Gaming Product Card Styling */
+
+:root {
+    --primary-glow: #00a8ff;
+    --secondary-glow: #9c00ff;
+    --accent-glow: #ff0055;
+    --dark-bg: #0f1923;
+    --darker-bg: #090d12;
+    --card-bg: #121c25;
+    --text-color: #e0e0e0;
+    --text-highlight: #ffffff;
+}
+
+body {
+    background-color: var(--dark-bg);
+    font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+.gaming-products-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.gaming-product {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    background: var(--card-bg);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    position: relative;
+    border-left: 3px solid var(--primary-glow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .gaming-product:nth-child(even) {
+        border-left: 3px solid var(--secondary-glow);
+    }
+
+    .gaming-product:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 168, 255, 0.3);
+    }
+
+    .gaming-product::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(to right, var(--primary-glow), var(--secondary-glow));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .gaming-product:hover::after {
+        opacity: 1;
+    }
+
+/* Fixed size product image */
+.product-image-wrapper {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--darker-bg);
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+    .product-image-wrapper img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+.gaming-product:hover .product-image-wrapper img {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 8px rgba(0, 168, 255, 0.4));
+}
+
+.product-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-highlight);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+    .product-name::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(to right, var(--primary-glow), var(--secondary-glow));
+    }
+
+.product-specs {
+    flex-grow: 1;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-color);
+    margin-bottom: 15px;
+}
+
+.product-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.product-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-glow);
+}
+
+.btn-details {
+    display: inline-block;
+    padding: 8px 24px;
+    background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+    .btn-details::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--secondary-glow), var(--accent-glow));
+        transition: left 0.3s ease;
+        z-index: -1;
+    }
+
+    .btn-details:hover {
+        color: white;
+        text-decoration: none;
+        box-shadow: 0 5px 15px rgba(156, 0, 255, 0.5);
+    }
+
+        .btn-details:hover::before {
+            left: 0;
+        }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .gaming-product {
+        grid-template-columns: 1fr;
+    }
+
+    .product-image-wrapper {
+        width: 100%;
+        height: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    .product-name {
+        font-size: 18px;
+    }
+
+    .product-specs {
+        font-size: 13px;
+    }
+
+    .product-price {
+        font-size: 18px;
+    }
+
+    .btn-details {
+        padding: 7px 20px;
+        font-size: 13px;
+    }
+}
+

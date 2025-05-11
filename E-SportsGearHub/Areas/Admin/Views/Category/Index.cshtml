@@ -3,35 +3,33 @@
 <div class="container">
     <div class="row pt-4 pb-3 align-items-center">
         <div class="col-md-6">
-            <h2 class="fw-bold">
-                <i class="bi bi-list-ul text-primary me-2"></i> Category List
+            <h2 class="fw-bold text-white orbitron">
+                <i class="bi bi-list-ul me-2" style="color: #00e5ff;"></i> Category List
             </h2>
         </div>
         <div class="col-md-6 text-end">
-            <a asp-controller="Category" asp-action="Create" class="btn btn-success shadow-sm">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-primary neon-btn shadow-sm">
                 <i class="bi bi-plus-circle-fill me-1"></i> Create New Category
             </a>
         </div>
     </div>
 
-    <div class="card shadow-sm mb-4">
+    <div class="card bg-dark border border-secondary shadow-sm mb-4">
         <div class="card-body p-0">
-            <table class="table table-hover mb-0">
+            <table class="table table-dark table-hover mb-0">
                 <thead>
-                    <tr class="bg-light text-dark">
-                        <th class="fw-bold ps-4" style="width: 60%">Category Name</th>
-                        <th class="fw-bold text-center" style="width: 20%">Display Order</th>
-                        <th class="fw-bold text-center" style="width: 20%">Actions</th>
+                    <tr style="background-color: #2a3354;">
+                        <th class="fw-bold ps-4 orbitron text-white" style="width: 60%">Category Name</th>
+                        <th class="fw-bold text-center orbitron text-white" style="width: 20%">Display Order</th>
+                        <th class="fw-bold text-center orbitron text-white" style="width: 20%">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var obj in Model.OrderBy(u => u.DisplayOrder))
                     {
                         <tr>
-                            <td class="align-middle ps-4">
-                                <span class="fw-semibold text-primary">@obj.Name</span>
-                            </td>
-                            <td class="align-middle text-center">@obj.DisplayOrder</td>
+                            <td class="align-middle ps-4 rajdhani text-accent fw-semibold">@obj.Name</td>
+                            <td class="align-middle text-center rajdhani text-light">@obj.DisplayOrder</td>
                             <td class="align-middle text-center">
                                 <div class="btn-group" role="group">
                                     <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id"
@@ -53,33 +51,63 @@
 </div>
 
 <style>
-    h2 {
-        letter-spacing: 0.5px;
+    body {
+        background-color: #151a30;
+        font-family: 'Rajdhani', sans-serif;
+        color: #ffffff;
     }
 
-    .table {
-        border-collapse: separate;
-        border-spacing: 0;
+    .orbitron {
+        font-family: 'Orbitron', sans-serif;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
 
-        .table thead th {
-            border-top: none;
-            border-bottom: 2px solid #dee2e6;
-            text-transform: uppercase;
+    .rajdhani {
+        font-family: 'Rajdhani', sans-serif;
+    }
+
+    .text-accent {
+        color: #00e5ff;
+    }
+
+    .table-dark {
+        background-color: transparent;
+    }
+
+        .table-dark thead th {
+            border-bottom: 2px solid #00e5ff;
             font-size: 14px;
-            letter-spacing: 0.5px;
-            padding-top: 16px;
-            padding-bottom: 16px;
         }
 
-        .table tbody tr:hover {
-            background-color: rgba(13, 110, 253, 0.04);
+        .table-dark tbody tr:hover {
+            background-color: rgba(0, 229, 255, 0.08);
+        }
+
+    .card {
+        background-color: rgba(42, 51, 84, 0.8);
+        border-radius: 8px;
+    }
+
+    .btn-primary.neon-btn {
+        background-color: #00e5ff;
+        border-color: #00e5ff;
+        color: #151a30;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary.neon-btn:hover {
+            background-color: #00a8e8;
+            border-color: #00a8e8;
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px #00e5ff;
         }
 
     .btn-outline-warning {
-        border-width: 1.5px;
-        color: #ffc107;
         border-color: #ffc107;
+        color: #ffc107;
+        font-weight: 500;
     }
 
         .btn-outline-warning:hover {
@@ -88,12 +116,18 @@
         }
 
     .btn-outline-danger {
-        border-width: 1.5px;
+        border-color: #ff3860;
+        color: #ff3860;
+        font-weight: 500;
     }
 
+        .btn-outline-danger:hover {
+            background-color: #ff3860;
+            color: #000;
+        }
+
     .btn-group .btn {
-        border-radius: 4px;
-        padding: 5px 10px;
-        font-weight: 500;
+        border-radius: 8px;
+        padding: 5px 12px;
     }
 </style>

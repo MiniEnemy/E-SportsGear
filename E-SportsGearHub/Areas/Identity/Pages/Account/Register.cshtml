@@ -1,0 +1,220 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - E-Sports Gear Hub</title>
+
+    <!-- External Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/Register.css" />
+</head>
+<body>
+    <div class="register-container">
+        <div class="card">
+            <div class="card-header">
+                Create Your Account
+            </div>
+            <div class="card-body p-0">
+                <div class="row g-0">
+                    <div class="col-lg-7">
+                        <div class="form-section">
+                            <h2>Personal Information</h2>
+                            <form id="registerForm" method="post">
+                                <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-floating">
+                                                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                                <label asp-for="Input.Email">Email</label>
+                                                <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                                            </div>
+                                            <span asp-validation-for="Input.Email" class="validation-error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-floating">
+                                                <input asp-for="Input.Name" class="form-control" aria-required="true" placeholder="Name" />
+                                                <label asp-for="Input.Name">First Name</label>
+                                                <span class="input-icon"><i class="fas fa-user"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-floating">
+                                        <input asp-for="Input.PhoneNumber" class="form-control" aria-required="true" placeholder="Phone Number" />
+                                        <label asp-for="Input.PhoneNumber">Phone Number</label>
+                                        <span class="input-icon"><i class="fas fa-phone"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-floating">
+                                                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Password" />
+                                                <label asp-for="Input.Password">Password</label>
+                                                <span class="input-icon"><i class="fas fa-lock"></i></span>
+                                            </div>
+                                            <span asp-validation-for="Input.Password" class="validation-error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-floating">
+                                                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
+                                                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                                                <span class="input-icon"><i class="fas fa-lock"></i></span>
+                                            </div>
+                                            <span asp-validation-for="Input.ConfirmPassword" class="validation-error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h2 class="mt-4">Address Information</h2>
+
+                                <div class="form-group">
+                                    <div class="form-floating">
+                                        <input asp-for="Input.StreetAddress" class="form-control" aria-required="true" placeholder="Street Address" />
+                                        <label asp-for="Input.StreetAddress">Street Address</label>
+                                        <span class="input-icon"><i class="fas fa-home"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="form-floating">
+                                                <input asp-for="Input.City" class="form-control" aria-required="true" placeholder="City" />
+                                                <label asp-for="Input.City">City</label>
+                                                <span class="input-icon"><i class="fas fa-city"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="form-floating">
+                                                <input asp-for="Input.State" class="form-control" aria-required="true" placeholder="State" />
+                                                <label asp-for="Input.State">State</label>
+                                                <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="form-floating">
+                                                <input asp-for="Input.PostalCode" class="form-control" aria-required="true" placeholder="Postal Code" />
+                                                <label asp-for="Input.PostalCode">Postal Code</label>
+                                                <span class="input-icon"><i class="fas fa-mail-bulk"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-floating">
+                                        <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select" aria-required="true">
+                                            <option disabled selected>-Select Role-</option>
+                                        </select>
+                                        <label asp-for="Input.Role">Account Role</label>
+                                    </div>
+                                </div>
+
+                                <button id="registerSubmit" type="submit" class="w-100 btn btn-primary btn-register">
+                                    <i class="fas fa-user-plus me-2"></i>Create Account
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 bg-dark">
+                        <div class="external-login">
+                            <h3 class="text-center mb-4">Quick Registration</h3>
+
+                            <div class="section-divider">
+                                <hr>
+                                <span>or use</span>
+                                <hr>
+                            </div>
+
+                            @if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                            {
+                                <div class="alert alert-info text-center">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    External authentication services are not configured yet.
+                                </div>
+                            }
+                            else
+                            {
+                                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="text-center">
+                                    <div>
+                                        @foreach (var provider in Model.ExternalLogins!)
+                                        {
+                                            <button type="submit" class="btn btn-outline-secondary social-btn" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                                @if (provider.Name.ToLower().Contains("google"))
+                                                {
+                                                    <i class="fab fa-google me-2"></i>
+                                                }
+                                                else if (provider.Name.ToLower().Contains("facebook"))
+                                                {
+                                                    <i class="fab fa-facebook me-2"></i>
+                                                }
+                                                else if (provider.Name.ToLower().Contains("microsoft"))
+                                                {
+                                                    <i class="fab fa-microsoft me-2"></i>
+                                                }
+                                                else if (provider.Name.ToLower().Contains("twitter"))
+                                                {
+                                                    <i class="fab fa-twitter me-2"></i>
+                                                }
+                                                else if (provider.Name.ToLower().Contains("apple"))
+                                                {
+                                                    <i class="fab fa-apple me-2"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fas fa-sign-in-alt me-2"></i>
+                                                }
+                                                @provider.DisplayName
+                                            </button>
+                                        }
+                                    </div>
+                                </form>
+                            }
+
+                            <div class="mt-5">
+                                <div class="card border-0 bg-white p-4 text-center shadow-sm">
+                                    <h5 class="mb-3 text-dark">Already have an account?</h5>
+                                    <a class="  btn btn-outline-primary" id="login" asp-area="Identity" asp-page="/Account/Login">
+                                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html>
