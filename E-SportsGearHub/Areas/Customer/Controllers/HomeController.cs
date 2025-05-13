@@ -19,7 +19,6 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // Display all products with global recommendations
         public async Task<IActionResult> Index()
         {
             var allProducts = await _unitOfWork.Product.GetAllAsync();
@@ -27,32 +26,26 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
             List<Product> topVisitedProducts = new List<Product>();
             List<Product> randomProducts = new List<Product>();
 
-            // Global top 5 most visited product IDs (aggregated across all users)
+            // Get global most visited product IDs
             var allVisits = await _unitOfWork.ProductVisit.GetAllAsync();
-            if (allVisits != null && allVisits.Any())
-            {
-                var globalTopIds = allVisits
-                    .GroupBy(v => v.ProductId)
-                    .Select(g => new
-                    {
-                        ProductId = g.Key,
-                        TotalVisits = g.Sum(v => v.VisitCount)
-                    })
-                    .OrderByDescending(g => g.TotalVisits)
-                    .Take(5)
-                    .Select(g => g.ProductId)
-                    .ToList();
 
-                var visitedProducts = (await _unitOfWork.Product
-                    .GetAllAsync(p => globalTopIds.Contains(p.Id)))
-                    .AsEnumerable()
-                    .OrderBy(p => globalTopIds.IndexOf(p.Id)) // run this in memory
-                    .ToList();
+            var globalTopIds = allVisits
+                .GroupBy(v => v.ProductId)
+                .Select(g => new { ProductId = g.Key, TotalVisits = g.Sum(v => v.VisitCount) })
+                .OrderByDescending(g => g.TotalVisits)
+                .Take(5)
+                .Select(g => g.ProductId)
+                .ToList();
 
-                topVisitedProducts = visitedProducts;
-            }
+            // Fetch and sort top visited products manually
+            var globalTopProducts = (await _unitOfWork.Product.GetAllAsync(p => globalTopIds.Contains(p.Id)))
+                .ToList()
+                .OrderBy(p => globalTopIds.IndexOf(p.Id))
+                .ToList();
 
-            // Always get random products
+            topVisitedProducts = globalTopProducts;
+
+            // Random products for discovery
             randomProducts = allProducts
                 .OrderBy(p => Guid.NewGuid())
                 .Take(6)
@@ -64,22 +57,6 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
             return View(allProducts);
         }
 
-        public async Task<IActionResult> Privacy()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> AboutUs()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> Home()
-        {
-            return View();
-        }
-
-        // Product details + visit tracking
         public async Task<IActionResult> Details(int productId)
         {
             var product = await _unitOfWork.Product.GetAsync(u => u.Id == productId, includeProperties: "Category");
@@ -89,7 +66,6 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
 
             if (!string.IsNullOrEmpty(userId))
             {
@@ -101,7 +77,6 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
                     {
                         ProductId = productId,
                         ApplicationUserId = userId,
-                        IpAddress = ipAddress,
                         VisitCount = 1,
                         VisitDate = DateTime.Now,
                         LastVisited = DateTime.Now
@@ -120,5 +95,9 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
 
             return View(product);
         }
+
+        public IActionResult Privacy() => View();
+        public IActionResult AboutUs() => View();
+        public IActionResult Home() => View();
     }
 }
