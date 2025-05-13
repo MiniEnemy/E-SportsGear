@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ESports_Models.Product>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var topVisited = ViewBag.TopVisitedProducts as List<ESports_Models.Product>;
+    var randomProducts = ViewBag.RandomProducts as List<ESports_Models.Product>;
+}
+
+<style>
+    body {
+        background-color: #0a0a0a;
+        color: #00ffff;
+        font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    }
+
+    .section-title {
+        color: #ff00ff;
+        border-bottom: 2px solid #ff00ff;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+    }
+
+    .product-card {
+        background-color: #111;
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 12px #00ffffaa;
+    }
+
+    .product-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .product-name {
+        font-size: 1.3rem;
+        color: #00ffff;
+    }
+
+    .product-desc {
+        font-size: 0.95rem;
+        color: #ccc;
+    }
+</style>
+
+<div class="container py-5">
+    <!-- Top Visited Products -->
+    @if (topVisited != null && topVisited.Any())
+    {
+        <h2 class="section-title">Your Most Visited Products</h2>
+        <div class="row">
+            @foreach (var product in topVisited)
+            {
+                <div class="col-md-4 col-sm-6">
+                    <div class="product-card">
+                        <img class="product-img" src="@product.ImageUrl" alt="@product.ProductName" />
+                        <h3 class="product-name">@product.ProductName</h3>
+                        <p class="product-desc">@product.Description</p>
+                        <a href="@Url.Action("Details", "Home", new { area = "Customer", productId = product.Id })" class="btn btn-outline-info mt-2">View Details</a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <!-- Random Products -->
+    @if (randomProducts != null && randomProducts.Any())
+    {
+        <h2 class="section-title mt-5">Explore Random Picks</h2>
+        <div class="row">
+            @foreach (var product in randomProducts)
+            {
+                <div class="col-md-4 col-sm-6">
+                    <div class="product-card">
+                        <img class="product-img" src="@product.ImageUrl" alt="@product.ProductName" />
+                        <h3 class="product-name">@product.ProductName</h3>
+                        <p class="product-desc">@product.Description</p>
+                        <a href="@Url.Action("Details", "Home", new { area = "Customer", productId = product.Id })" class="btn btn-outline-warning mt-2">View Details</a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

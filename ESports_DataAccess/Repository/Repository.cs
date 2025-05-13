@@ -1,34 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using ESports_DataAccess.Data;
+﻿using ESports_DataAccess.Data;
 using ESports_DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ESports_DataAccess.Repository
 {
-    public class Repository<T> :    IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _db;
-        internal DbSet<T> dbSet;
-        public Repository(ApplicationDbContext db)
+        private readonly ApplicationDbContext _context;
+        private DbSet<T> _dbSet;
+
+        public Repository(ApplicationDbContext context)
         {
-            _db = db;
-            this.dbSet = _db.Set<T>();  
-            _db.Products.Include(u => u.Category).Include(u=>u.CategoryId);
-        }
-        public void Add(T entity)
-        {
-            dbSet.Add(entity);
+            _context = context;
+            _dbSet = _context.Set<T>();
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, string includeProperties = "")
         {
-            IQueryable<T> query = dbSet;
-            query= query.Where(filter);
+            IQueryable<T> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
@@ -36,29 +35,45 @@ namespace ESports_DataAccess.Repository
                     query = query.Include(includeProperty);
                 }
             }
-            return query.FirstOrDefault();
+
+            return await query.FirstOrDefaultAsync();
         }
-        //cateogry,categoryid
-        public IEnumerable<T> GetAll(string? includeProperties= null)
+
+        public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, string includeProperties = "")
         {
-            IQueryable<T> query = dbSet;
-            if (!string.IsNullOrEmpty(includeProperties)){
+            IQueryable<T> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
                 foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProperty);
                 }
             }
-            return query.ToList();
+
+            return query;
         }
 
-        public void Remove(T entity)
+        public async Task AddAsync(T entity)
         {
-            dbSet.Remove(entity);
+            await _dbSet.AddAsync(entity);
         }
 
-        public void RemoveRange(IEnumerable<T> entity)
+        public async Task RemoveAsync(T entity)
         {
-            dbSet.RemoveRange(entity);
+            _dbSet.Remove(entity);
+            await Task.CompletedTask;
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            _dbSet.Update(entity);
+            await Task.CompletedTask;
         }
     }
 }

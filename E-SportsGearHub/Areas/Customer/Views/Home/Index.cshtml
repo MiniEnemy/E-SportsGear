@@ -1,22 +1,72 @@
-﻿@model IEnumerable<Product>
+﻿@model IEnumerable<ESports_Models.Product>
+@{
+    ViewData["Title"] = "Home";
+    var topVisited = ViewBag.TopVisitedProducts as List<ESports_Models.Product>;
+    var randomPicks = ViewBag.RandomProducts as List<ESports_Models.Product>;
+}
 
-<div class="row pb-3">
-    @foreach (var product in Model)
-    {
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <img src="@Url.Content(product.ImageUrl)" class="card-img-top" alt="@product.ProductName">
-                <div class="card-body">
-                    <h5 class="card-title">@product.ProductName</h5>
-                    <p class="card-text">@product.Description</p>
-                    <p class="card-text"><strong>Price: @product.Price.ToString("C")</strong></p>
-                    <a asp-action="Details"
-                       asp-route-productId="@product.Id"
-                       class="btn btn-primary bg-gradient border-0 form-control">
-                        Details
-                    </a>
+<div class="container mt-5 text-light">
+    <h2 class="neon-text mb-4">🏆 Top Recommendations</h2>
+    <div class="row">
+        @if (topVisited != null && topVisited.Any())
+        {
+            foreach (var product in topVisited)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-dark border-neon shadow-lg h-100">
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.ProductName" />
+                        <div class="card-body">
+                            <h5 class="card-title text-neon">@product.ProductName</h5>
+                            <p class="card-text">@product.Description?.Substring(0, Math.Min(product.Description.Length, 100))...</p>
+                            <p class="text-neon">Rs. @product.Price.ToString("F2")</p>
+                            <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-outline-neon">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No recommendations available yet.</p>
+        }
+    </div>
+
+    <hr class="neon-divider" />
+
+    <h2 class="neon-text mb-4">🎲 Random Picks For You</h2>
+    <div class="row">
+        @foreach (var product in randomPicks)
+        {
+            <div class="col-md-4 mb-4"> 
+                <div class="card bg-dark border-neon shadow-lg h-100">
+                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.ProductName" />
+                    <div class="card-body">
+                        <h5 class="card-title text-neon">@product.ProductName</h5>
+                        <p class="card-text">@product.Description?.Substring(0, Math.Min(product.Description.Length, 100))...</p>
+                        <p class="text-neon">Rs. @product.Price.ToString("F2")</p>
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-outline-neon">View</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
+
+    <hr class="neon-divider" />
+
+    <h2 class="neon-text mb-4">🎮 All Products</h2>
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card bg-dark border-secondary h-100">
+                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.ProductName" />
+                    <div class="card-body">
+                        <h5 class="card-title">@product.ProductName</h5>
+                        <p class="text-info">Rs. @product.Price.ToString("F2")</p>
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-outline-info">View</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

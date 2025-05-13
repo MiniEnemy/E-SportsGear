@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ESports_DataAccess\ESports_DataAccess.csproj" />
+    <ProjectReference Include="..\ESports_Models\ESports_Models.csproj" />
   </ItemGroup>
 
 </Project>

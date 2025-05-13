@@ -1,0 +1,125 @@
+﻿/* Cyberpunk-Inspired E-Commerce Theme */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap');
+
+:root {
+    /* Color Palette */
+    --bg-primary: #151a30;
+    --bg-secondary: #2a3354;
+    --accent-blue: #00e5ff;
+    --accent-hover: #00a8e8;
+    --text-primary: #fff;
+    --text-secondary: #b8b8b8;
+    --feedback-error: #ff3860;
+    --feedback-success: #00d1b2;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    line-height: 1.6;
+}
+
+/* Section Titles */
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-blue);
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
+
+/* Product Card Styling */
+.product-card {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid transparent;
+}
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 229, 255, 0.2);
+        border-color: var(--accent-blue);
+    }
+
+.product-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.product-name {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-blue);
+    margin-bottom: 0.5rem;
+}
+
+.product-desc {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+/* Button Styling */
+.btn-outline-info,
+.btn-outline-warning {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-width: 2px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-outline-info {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.btn-outline-warning {
+    border-color: var(--accent-hover);
+    color: var(--accent-hover);
+}
+
+    .btn-outline-info:hover,
+    .btn-outline-warning:hover {
+        background-color: var(--accent-blue);
+        color: var(--bg-primary);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+    }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .product-card {
+        margin-bottom: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Glow and Animation Effects */
+@keyframes neon-pulse {
+    0%, 100% {
+        text-shadow: 0 0 5px var(--accent-blue);
+    }
+
+    50% {
+        text-shadow: 0 0 15px var(--accent-blue);
+    }
+}
+
+.neon-glow {
+    animation: neon-pulse 2s infinite;
+}
