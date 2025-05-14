@@ -79,6 +79,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
+
 // Map Razor Pages for Identity UI
 app.MapRazorPages();
 
