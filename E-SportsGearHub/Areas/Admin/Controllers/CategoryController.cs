@@ -2,7 +2,7 @@
 using ESports_DataAccess.Repository.IRepository;
 using ESports_Models;
 using System.Threading.Tasks;
-using ESports_DataAccess.Repository;
+using System.Linq;
 
 namespace E_SportsGearHub.Areas.Admin.Controllers
 {
@@ -15,6 +15,12 @@ namespace E_SportsGearHub.Areas.Admin.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        public async Task<IActionResult> Index()
+        {
+            var allCategories = await _unitOfWork.Category.GetAllAsync();
+            return View(allCategories.ToList());
+        }
+
 
         public async Task<IActionResult> Create(Category category)
         {

@@ -99,5 +99,6 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
         public IActionResult Privacy() => View();
         public IActionResult AboutUs() => View();
         public IActionResult Home() => View();
+        public IActionResult Product() => View();
     }
 }
