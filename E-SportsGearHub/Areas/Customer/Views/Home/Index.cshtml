@@ -19,7 +19,15 @@
                             <h5 class="card-title text-neon">@product.ProductName</h5>
                             <p class="card-text">@product.Description?.Substring(0, Math.Min(product.Description.Length, 100))...</p>
                             <p class="text-neon">Rs. @product.Price.ToString("F2")</p>
-                            <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-outline-neon">View</a>
+
+                            @if (product.Stock == 0)
+                            {
+                                <span class="badge bg-danger text-uppercase">Out of Stock</span>
+                            }
+                            else
+                            {
+                                <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-outline-neon">View</a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -33,40 +41,32 @@
 
     <hr class="neon-divider" />
 
-    <h2 class="neon-text mb-4">🎲 Random Picks For You</h2>
+    <h2 class="neon-text mb-4">🎲 Random Picks</h2>
     <div class="row">
-        @foreach (var product in randomPicks)
+        @if (randomPicks != null && randomPicks.Any())
         {
-            <div class="col-md-4 mb-4"> 
-                <div class="card bg-dark border-neon shadow-lg h-100">
-                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.ProductName" />
-                    <div class="card-body">
-                        <h5 class="card-title text-neon">@product.ProductName</h5>
-                        <p class="card-text">@product.Description?.Substring(0, Math.Min(product.Description.Length, 100))...</p>
-                        <p class="text-neon">Rs. @product.Price.ToString("F2")</p>
-                        <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-outline-neon">View</a>
+            foreach (var product in randomPicks)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-dark border-neon shadow-lg h-100">
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.ProductName" />
+                        <div class="card-body">
+                            <h5 class="card-title text-neon">@product.ProductName</h5>
+                            <p class="card-text">@product.Description?.Substring(0, Math.Min(product.Description.Length, 100))...</p>
+                            <p class="text-neon">Rs. @product.Price.ToString("F2")</p>
+
+                            @if (product.Stock == 0)
+                            {
+                                <span class="badge bg-danger text-uppercase">Out of Stock</span>
+                            }
+                            else
+                            {
+                                <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-outline-neon">View</a>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-
-    <hr class="neon-divider" />
-
-    <h2 class="neon-text mb-4">🎮 All Products</h2>
-    <div class="row">
-        @foreach (var product in Model)
-        {
-            <div class="col-md-3 mb-4">
-                <div class="card bg-dark border-secondary h-100">
-                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.ProductName" />
-                    <div class="card-body">
-                        <h5 class="card-title">@product.ProductName</h5>
-                        <p class="text-info">Rs. @product.Price.ToString("F2")</p>
-                        <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-outline-info">View</a>
-                    </div>
-                </div>
-            </div>
+            }
         }
     </div>
 </div>

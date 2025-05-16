@@ -1,5 +1,6 @@
 using ESports_DataAccess.Repository.IRepository;
 using ESports_Models;
+using ESports_Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,37 +22,29 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var allProducts = await _unitOfWork.Product.GetAllAsync();
+            var allProducts = await _unitOfWork.Product.GetAllAsync(includeProperties: "Category");
 
-            List<Product> topVisitedProducts = new List<Product>();
-            List<Product> randomProducts = new List<Product>();
-
-            // Get global most visited product IDs
             var allVisits = await _unitOfWork.ProductVisit.GetAllAsync();
 
             var globalTopIds = allVisits
                 .GroupBy(v => v.ProductId)
                 .Select(g => new { ProductId = g.Key, TotalVisits = g.Sum(v => v.VisitCount) })
                 .OrderByDescending(g => g.TotalVisits)
-                .Take(5)
+                .Take(6)
                 .Select(g => g.ProductId)
                 .ToList();
 
-            // Fetch and sort top visited products manually
             var globalTopProducts = (await _unitOfWork.Product.GetAllAsync(p => globalTopIds.Contains(p.Id)))
                 .ToList()
                 .OrderBy(p => globalTopIds.IndexOf(p.Id))
                 .ToList();
 
-            topVisitedProducts = globalTopProducts;
-
-            // Random products for discovery
-            randomProducts = allProducts
+            var randomProducts = allProducts
                 .OrderBy(p => Guid.NewGuid())
                 .Take(6)
                 .ToList();
 
-            ViewBag.TopVisitedProducts = topVisitedProducts;
+            ViewBag.TopVisitedProducts = globalTopProducts;
             ViewBag.RandomProducts = randomProducts;
 
             return View(allProducts);
@@ -93,11 +86,40 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
                 await _unitOfWork.SaveAsync();
             }
 
-            return View(product);
+            var productVM = new ProductVM
+            {
+                Product = product,
+                Count = 1
+            };
+
+            return View(productVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(ProductVM productVM)
+        {
+            var product = await _unitOfWork.Product.GetAsync(p => p.Id == productVM.Product.Id, includeProperties: "Category");
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            if (productVM.Count > product.Stock)
+            {
+                ModelState.AddModelError("Count", $"Only {product.Stock} items left in stock.");
+                productVM.Product = product;
+                return View(productVM);
+            }
+
+            // Add to cart logic goes here...
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy() => View();
         public IActionResult AboutUs() => View();
         public IActionResult Home() => View();
+        public IActionResult Product() => View();
     }
 }

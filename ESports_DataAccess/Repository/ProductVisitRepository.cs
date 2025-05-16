@@ -1,6 +1,6 @@
 ﻿using ESports_DataAccess.Data;
-using ESports_DataAccess.Repository.IRepository;
 using ESports_Models;
+using ESports_DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -15,10 +15,16 @@ namespace ESports_DataAccess.Repository
             _db = db;
         }
 
-        public async Task<ProductVisit> GetVisitAsync(int productId, string applicationUserId)
+        public async Task<ProductVisit> GetVisitAsync(int productId, string userId)
         {
             return await _db.ProductVisits
-                .FirstOrDefaultAsync(v => v.ProductId == productId && v.ApplicationUserId == applicationUserId);
+                .FirstOrDefaultAsync(v => v.ProductId == productId && v.ApplicationUserId == userId);
+        }
+
+        public async Task UpdateAsync(ProductVisit visit)
+        {
+            _db.ProductVisits.Update(visit);
+            await _db.SaveChangesAsync();
         }
     }
 }

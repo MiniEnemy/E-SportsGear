@@ -12,6 +12,7 @@ namespace ESports_Models.ViewModels
     public class ProductVM
     {
         public Product Product { get; set; }
+        public int Count { get; set; } = 1;
         [ValidateNever]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
 

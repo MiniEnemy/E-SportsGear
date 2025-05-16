@@ -1,55 +1,53 @@
-﻿@* @model Product *@
-<form method="post">
-    <div class="product-container mt-4">
-        <div class="product-header">
-            <h1 class="product-title">@Model.ProductName</h1>
-            <p class="product-category">@Model.Category.Name</p>
-            <div class="cyber-separator"></div>
+﻿@model ESports_Models.ViewModels.ProductVM
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Model.Product.ImageUrl" class="img-fluid" alt="@Model.Product.ProductName" />
         </div>
+        <div class="col-md-6">
+            <h2>@Model.Product.ProductName</h2>
+            <p>@Model.Product.Description</p>
+            <p><strong>Price:</strong> Rs. @Model.Product.Price</p>
 
-        <div class="content-area">  
-            <div class="back-button-container">
-                <a asp-action="Index" class="back-button">
-                    <i class="fas fa-chevron-left"></i> BACK TO BROWSE
-                </a>
-            </div>
+            @if (Model.Product.Stock == 0)
+            {
+                <p class="text-danger fw-bold">Out of Stock</p>
+            }
+            else
+            {
+                <p class="text-success fw-bold">@Model.Product.Stock items left in stock</p>
+            }
 
-            <div class="product-content">
-                <div class="product-image-container">
-                    <img src="@Model.ImageUrl" class="product-image" alt="@Model.ProductName" />
-                    @* @if (Model.IsFeatured) *@
-                    @* { *@
-                    @*     <div class="hot-badge">HOT</div> *@
-                    @* } *@
+            <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                <input type="hidden" name="productId" value="@Model.Product.Id" />
+                <div class="form-group mb-3">
+                    <label for="count">Quantity:</label>
+                    <input type="number" class="form-control" name="count" value="1" min="1" max="@Model.Product.Stock"
+                           @(Model.Product.Stock == 0 ? "disabled" : "") />
                 </div>
 
-                <div class="product-details">
-                    <div class="product-description">
-                        <div class="description-marker"></div>
-                        <p>@Html.Raw(Model.Description)</p>
-                    </div>
+                <button type="submit" class="btn btn-primary" @(Model.Product.Stock == 0 ? "disabled" : "")>
+                    Add to Cart
+                </button>
+            </form>
 
-                    <div class="price-container">
-                        <span class="price-label">$@Model.Price.ToString("F2")</span>
-                    </div>
-
-                    <div class="quantity-container">
-                        <div class="quantity-selector">
-                            <label class="quantity-label">QTY</label>
-                            <input type="number" name="count" value="1" min="1" class="quantity-input" />
-                        </div>
-                    </div>
-
-                    <div class="cart-button-container">
-                        <button type="submit" class="add-to-cart-button">
-                            <i class="fas fa-shopping-cart"></i> ADD TO CART
-                        </button>
-                    </div>
-                </div>
-            </div>
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger mt-3">@TempData["Error"]</div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success mt-3">@TempData["Success"]</div>
+            }
         </div>
     </div>
-</form>
+</div>
+
 
 <link rel="stylesheet" href="~/css/Details.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />

@@ -22,9 +22,13 @@ namespace ESports_Models
             [Required]
             public string Description { get; set; }
 
-            
+            [Range(0, 100, ErrorMessage = "Stock must be between 0 and 100")]
+            public int Stock { get; set; } = 0;
 
-            [Required]
+
+
+
+        [Required]
             [DisplayName("Price (NPR)")]
             [Range(1, 100000, ErrorMessage = "Price must be between NPR 1 and 100,000")]
             public double Price { get; set; }
@@ -35,6 +39,7 @@ namespace ESports_Models
         public Category Category { get; set; }
         [ValidateNever]
         public string ImageUrl { get; set; }
+
           
        
         }
