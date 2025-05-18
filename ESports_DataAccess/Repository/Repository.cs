@@ -2,6 +2,7 @@
 using ESports_DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace ESports_DataAccess.Repository
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDbContext _context;
-        private DbSet<T> _dbSet;
+        private readonly DbSet<T> _dbSet;
 
         public Repository(ApplicationDbContext context)
         {
@@ -24,13 +25,11 @@ namespace ESports_DataAccess.Repository
             IQueryable<T> query = _dbSet;
 
             if (filter != null)
-            {
                 query = query.Where(filter);
-            }
 
-            if (!string.IsNullOrEmpty(includeProperties))
+            if (!string.IsNullOrWhiteSpace(includeProperties))
             {
-                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProperty in includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProperty);
                 }
@@ -39,24 +38,22 @@ namespace ESports_DataAccess.Repository
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, string includeProperties = "")
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, string includeProperties = "")
         {
             IQueryable<T> query = _dbSet;
 
             if (filter != null)
-            {
                 query = query.Where(filter);
-            }
 
-            if (!string.IsNullOrEmpty(includeProperties))
+            if (!string.IsNullOrWhiteSpace(includeProperties))
             {
-                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProperty in includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProperty);
                 }
             }
 
-            return query;
+            return await query.ToListAsync();
         }
 
         public async Task AddAsync(T entity)
@@ -64,16 +61,27 @@ namespace ESports_DataAccess.Repository
             await _dbSet.AddAsync(entity);
         }
 
+        public void Remove(T entity)
+        {
+            _dbSet.Remove(entity);
+        }
+        public async Task RemoveRangeAsync(IEnumerable<T> entities)
+        {
+            _dbSet.RemoveRange(entities);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task RemoveAsync(T entity)
         {
             _dbSet.Remove(entity);
-            await Task.CompletedTask;
+            await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(T entity)
+
+        public void Update(T entity)
         {
             _dbSet.Update(entity);
-            await Task.CompletedTask;
         }
+
     }
 }

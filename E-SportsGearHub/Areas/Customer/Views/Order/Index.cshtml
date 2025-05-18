@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ESports_Models.OrderHeader>
+
+@{
+    ViewData["Title"] = "All Orders";
+}
+
+<div class="container mt-5">
+    <h2>All Orders</h2>
+
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Payment Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach(var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.ApplicationUser.Email</td>
+                <td>@order.OrderDate.ToString("dd MMM yyyy")</td>
+                <td>Rs. @order.OrderTotal</td>
+                <td>@order.Status</td>
+                <td>@order.PaymentStatus</td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-orderId="@order.Id" class="btn btn-info btn-sm">Details</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

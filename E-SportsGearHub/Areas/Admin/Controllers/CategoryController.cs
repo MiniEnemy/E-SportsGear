@@ -3,7 +3,6 @@ using ESports_Models;
 using ESports_Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace E_SportsGearHub.Areas.Admin.Controllers
 {
@@ -22,8 +21,7 @@ namespace E_SportsGearHub.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var categories = await _unitOfWork.Category.GetAllAsync();
-            var categoryList = await categories.ToListAsync(); // Fix for IQueryable Task
-            return View(categoryList);
+            return View(categories);
         }
 
         // GET: Admin/Category/Create
@@ -53,7 +51,7 @@ namespace E_SportsGearHub.Areas.Admin.Controllers
             return View(obj);
         }
 
-        // GET: Admin/Category/Edit/3   
+        // GET: Admin/Category/Edit/3
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || id == 0)
@@ -107,8 +105,10 @@ namespace E_SportsGearHub.Areas.Admin.Controllers
             if (category == null)
                 return NotFound();
 
-            await _unitOfWork.Category.RemoveAsync(category);
+            // Use Remove (synchronous) instead of RemoveAsync
+            _unitOfWork.Category.Remove(category);
             await _unitOfWork.SaveAsync();
+
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction(nameof(Index));
         }

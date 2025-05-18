@@ -1,6 +1,6 @@
 ﻿@model ProductVM
 
-<form method="post" class="bg-light shadow-sm p-4 rounded" enctype="multipart/form-data">
+<form asp-action="Upsert" method="post" class="bg-light shadow-sm p-4 rounded" enctype="multipart/form-data">
     <input asp-for="Product.Id" type="hidden" />
     <input asp-for="Product.ImageUrl" type="hidden" />
     <div class="row">

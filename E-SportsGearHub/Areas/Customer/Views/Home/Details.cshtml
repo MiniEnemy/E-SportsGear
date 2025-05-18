@@ -23,18 +23,27 @@
                 <p class="text-success fw-bold">@Model.Product.Stock items left in stock</p>
             }
 
-            <form asp-action="AddToCart" asp-controller="Cart" method="post">
+            <form asp-action="AddToCart" asp-controller="Cart" method="post" class="mt-3">
                 <input type="hidden" name="productId" value="@Model.Product.Id" />
+
                 <div class="form-group mb-3">
-                    <label for="count">Quantity:</label>
-                    <input type="number" class="form-control" name="count" value="1" min="1" max="@Model.Product.Stock"
+                    <label asp-for="Product.Stock" class="form-label">Quantity:</label>
+                    <input type="number" name="count" value="1" min="1" max="@Model.Product.Stock"
+                           class="form-control"
                            @(Model.Product.Stock == 0 ? "disabled" : "") />
                 </div>
 
-                <button type="submit" class="btn btn-primary" @(Model.Product.Stock == 0 ? "disabled" : "")>
-                    Add to Cart
+                <button type="submit" class="btn btn-success w-100"
+                        @(Model.Product.Stock == 0 ? "disabled" : "")>
+                    <i class="bi bi-cart-plus"></i> Add to Cart
                 </button>
+
+                @if (Model.Product.Stock == 0)
+                {
+                    <div class="text-danger mt-2">Out of Stock</div>
+                }
             </form>
+
 
             @if (TempData["Error"] != null)
             {

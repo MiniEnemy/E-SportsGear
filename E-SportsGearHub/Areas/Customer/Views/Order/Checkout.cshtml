@@ -1,0 +1,45 @@
+﻿@model ESports_Models.ViewModels.OrderVM
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container mt-5 text-white">
+    <h2 class="mb-4">Order Summary</h2>
+
+    <div class="card bg-dark border-light">
+        <div class="card-body">
+            <table class="table table-dark table-bordered">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.CartItems)
+                {
+                    <tr>
+                        <td>@item.Product.ProductName</td>
+                        <td>Rs. @item.Product.Price</td>
+                        <td>@item.Count</td>
+                        <td>Rs. @(item.Product.Price * item.Count)</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <h4 class="text-end">Total: Rs. @Model.OrderHeader.OrderTotal</h4>
+        </div>
+    </div>
+
+    <form method="post" asp-action="Checkout">
+        <input type="hidden" asp-for="OrderHeader.Id" />
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success btn-lg">Proceed to Pay with Card</button>
+        </div>
+    </form>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />

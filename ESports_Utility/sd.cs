@@ -10,5 +10,10 @@ namespace ESports_Utility
     {
         public const string Role_Customer = "Customer";
         public const string Role_Admin = "Admin";
+        public const string PaymentStatusPending = "Pending";
+        public const string PaymentStatusApproved = "Approved";
+        public const string PaymentStatusCOD = "COD";
+        public const string StatusPending = "Pending";
+        public const string StatusApproved = "Approved";
     }
 }

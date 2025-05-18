@@ -61,32 +61,56 @@ namespace E_SportsGearHub.Areas.Admin.Controllers
 
         // POST: Product/Upsert
         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Upsert(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
 
-                if (file != null)
+                try
                 {
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string productPath = Path.Combine(wwwRootPath, @"images\product");
-
-                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                    if (file != null)
                     {
-                        var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
-                        if (System.IO.File.Exists(oldImagePath))
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                        string productPath = Path.Combine(wwwRootPath, "images", "product");
+
+                        // Ensure the folder exists
+                        if (!Directory.Exists(productPath))
                         {
-                            System.IO.File.Delete(oldImagePath);
+                            Directory.CreateDirectory(productPath);
                         }
-                    }
 
-                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                        // Delete old image if exists
+                        if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                        {
+                            var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+                            if (System.IO.File.Exists(oldImagePath))
+                            {
+                                System.IO.File.Delete(oldImagePath);
+                            }
+                        }
+
+                        // Save new image
+                        using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+
+                        productVM.Product.ImageUrl = @"\images\product\" + fileName;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Add model error and reload categories list for returning the view
+                    ModelState.AddModelError("", "Image upload failed: " + ex.Message);
+                    var categories = await _unitOfWork.Category.GetAllAsync();
+                    productVM.CategoryList = categories.Select(u => new SelectListItem
                     {
-                        await file.CopyToAsync(fileStream);
-                    }
-
-                    productVM.Product.ImageUrl = @"\images\product\" + fileName;
+                        Text = u.Name,
+                        Value = u.Id.ToString()
+                    });
+                    return View(productVM);
                 }
 
                 if (productVM.Product.Id == 0)
@@ -103,8 +127,8 @@ namespace E_SportsGearHub.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var categories = await _unitOfWork.Category.GetAllAsync();
-            productVM.CategoryList = categories.Select(u => new SelectListItem
+            var categoriesList = await _unitOfWork.Category.GetAllAsync();
+            productVM.CategoryList = categoriesList.Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.Id.ToString()
@@ -112,6 +136,7 @@ namespace E_SportsGearHub.Areas.Admin.Controllers
 
             return View(productVM);
         }
+
 
         #region API CALLS
         [HttpGet]
