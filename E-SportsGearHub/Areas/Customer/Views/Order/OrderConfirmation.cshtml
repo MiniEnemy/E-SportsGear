@@ -1,48 +1,13 @@
 ﻿@model ESports_Models.OrderHeader
 
+
 @{
     ViewData["Title"] = "Order Confirmation";
 }
 
-<div class="container mt-5">
-    <h2>Order Confirmation</h2>
-    <p>Thank you for your order, @Model.Name!</p>
+<h2>Thank you for your order!</h2>
 
-    <h4>Order Details</h4>
-    <p><strong>Order ID:</strong> @Model.Id</p>
-    <p><strong>Order Date:</strong> @Model.OrderDate.ToString("dd MMM yyyy")</p>
-    <p><strong>Status:</strong> @Model.Status</p>
-    <p><strong>Payment Status:</strong> @Model.PaymentStatus</p>
-    <p><strong>Total:</strong> Rs. @Model.OrderTotal</p>
+<p>Your order ID is <strong>@Model.Id</strong></p>
+<p>We have sent a confirmation email to you.</p>
 
-    <h5>Shipping Address</h5>
-    <p>
-        @Model.StreetAddress <br />
-        @Model.City, @Model.State - @Model.PostalCode
-    </p>
-
-    <h5>Ordered Products</h5>
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr>
-            <th>Product</th>
-            <th>Qty</th>
-            <th>Price</th>
-            <th>Subtotal</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var detail in Model.OrderDetails)
-        {
-            <tr>
-                <td>@detail.Product.ProductName</td>
-                <td>@detail.Count</td>
-                <td>Rs. @detail.Price</td>
-                <td>Rs. @(detail.Price * detail.Count)</td>
-            </tr>
-        }
-        </tbody>
-    </table>
-
-    <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-primary">Continue Shopping</a>
-</div>
+<a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Home</a>

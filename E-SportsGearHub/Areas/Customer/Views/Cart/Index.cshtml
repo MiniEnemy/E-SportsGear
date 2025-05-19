@@ -1,0 +1,58 @@
+﻿@model ESports_Models.ViewModels.ShoppingCartVM
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<h2>Shopping Cart</h2>
+
+@if (Model.ShoppingCartList != null && Model.ShoppingCartList.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Count</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ShoppingCartList)
+            {
+                <tr>
+                    <td>@item.Product.ProductName</td>
+                    <td>@item.Product.Price.ToString("C")</td>
+                    <td>@item.Count</td>
+                    <td>@((item.Count * item.Product.Price).ToString("C"))</td>
+                    <td>
+                        <form asp-action="Plus" method="post" style="display:inline">
+                            <input type="hidden" name="cartId" value="@item.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">+</button>
+                        </form>
+                        <form asp-action="Minus" method="post" style="display:inline">
+                            <input type="hidden" name="cartId" value="@item.Id" />
+                            <button type="submit" class="btn btn-warning btn-sm">-</button>
+                        </form>
+                        <form asp-action="Remove" method="post" style="display:inline">
+                            <input type="hidden" name="cartId" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <strong>Total Order Amount:</strong> @Model.OrderHeader.OrderTotal.ToString("C")
+    </div>
+
+    <a asp-area="Customer" asp-controller="Cart" asp-action="Checkout" class="btn btn-primary">Checkout</a>
+
+}
+else
+{
+    <p>Your cart is empty.</p>
+}

@@ -4,42 +4,58 @@
     ViewData["Title"] = "Checkout";
 }
 
-<div class="container mt-5 text-white">
-    <h2 class="mb-4">Order Summary</h2>
+<h2>Checkout</h2>
 
-    <div class="card bg-dark border-light">
-        <div class="card-body">
-            <table class="table table-dark table-bordered">
-                <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Unit Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in Model.CartItems)
-                {
-                    <tr>
-                        <td>@item.Product.ProductName</td>
-                        <td>Rs. @item.Product.Price</td>
-                        <td>@item.Count</td>
-                        <td>Rs. @(item.Product.Price * item.Count)</td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-            <h4 class="text-end">Total: Rs. @Model.OrderHeader.OrderTotal</h4>
-        </div>
+<form asp-area="Customer" asp-controller="Order" asp-action="Checkout" method="post">
+    <div class="form-group">
+        <label asp-for="OrderHeader.Name"></label>
+        <input asp-for="OrderHeader.Name" class="form-control" />
+        <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
     </div>
 
-    <form method="post" asp-action="Checkout">
-        <input type="hidden" asp-for="OrderHeader.Id" />
-        <div class="text-center mt-4">
-            <button type="submit" class="btn btn-success btn-lg">Proceed to Pay with Card</button>
-        </div>
-    </form>
-</div>
+    <div class="form-group">
+        <label asp-for="OrderHeader.PhoneNumber"></label>
+        <input asp-for="OrderHeader.PhoneNumber" class="form-control" />
+        <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
+    </div>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
+    <div class="form-group">
+        <label asp-for="OrderHeader.StreetAddress"></label>
+        <input asp-for="OrderHeader.StreetAddress" class="form-control" />
+        <span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="OrderHeader.City"></label>
+        <input asp-for="OrderHeader.City" class="form-control" />
+        <span asp-validation-for="OrderHeader.City" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="OrderHeader.State"></label>
+        <input asp-for="OrderHeader.State" class="form-control" />
+        <span asp-validation-for="OrderHeader.State" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="OrderHeader.PostalCode"></label>
+        <input asp-for="OrderHeader.PostalCode" class="form-control" />
+        <span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Payment Method</label>
+        <select asp-for="OrderHeader.PaymentStatus" class="form-control">
+            <option value="Pending">Cash on Delivery</option>
+            <option value="Approved">Online Payment</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Place Order</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

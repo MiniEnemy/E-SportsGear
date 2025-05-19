@@ -56,13 +56,21 @@
                             <p class="text-neon">Rs. @product.Price.ToString("F2")</p>
 
                             @if (product.Stock == 0)
-                            {
-                                <span class="badge bg-danger text-uppercase">Out of Stock</span>
-                            }
-                            else
-                            {
-                                <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-outline-neon">View</a>
-                            }
+{
+    <span class="badge bg-danger text-uppercase">Out of Stock</span>
+}
+else
+{
+    <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-outline-neon">View</a>
+
+    <form asp-area="Customer" asp-controller="Cart" asp-action="AddToCart" method="post" class="mt-2">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="productId" value="@product.Id" />
+        <input type="hidden" name="count" value="1" />
+        <button type="submit" class="btn btn-neon">Add to Cart</button>
+    </form>
+}
+
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,9 @@
 ﻿using ESports_DataAccess.Data;
 using ESports_DataAccess.Repository.IRepository;
 using ESports_Models;
+using ESports_Utility;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ESports_DataAccess.Repository
 {
@@ -17,28 +20,27 @@ namespace ESports_DataAccess.Repository
         {
             _db.OrderHeaders.Update(orderHeader);
         }
-
-        public void UpdateStatus(int id, string orderStatus, string? paymentStatus = null)
+        public async Task<IEnumerable<OrderHeader>> GetOrdersWithDetailsAsync(string userId)
+        {
+            return await _db.OrderHeaders
+                .Where(o => o.ApplicationUserId == userId)
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Product)
+                .ToListAsync();
+        }
+        public void CancelOrder(int id)
         {
             var order = _db.OrderHeaders.FirstOrDefault(o => o.Id == id);
-            if (order != null)
+            if (order != null && order.OrderStatus != Sd.StatusShipped && order.OrderStatus != Sd.StatusCancelled)
             {
-                order.OrderStatus = orderStatus;
-                if (paymentStatus != null)
-                {
-                    order.PaymentStatus = paymentStatus;
-                }
+                order.OrderStatus = Sd.StatusCancelled;
             }
         }
 
-        public void UpdateStripePaymentID(int id, string sessionId, string paymentIntentId)
+        public async Task UpdateAsync(OrderHeader orderHeader)
         {
-            var order = _db.OrderHeaders.FirstOrDefault(o => o.Id == id);
-            if (order != null)
-            {
-                order.SessionId = sessionId;
-                order.PaymentIntentId = paymentIntentId;
-            }
+            _db.OrderHeaders.Update(orderHeader);
+            await _db.SaveChangesAsync();
         }
     }
 }

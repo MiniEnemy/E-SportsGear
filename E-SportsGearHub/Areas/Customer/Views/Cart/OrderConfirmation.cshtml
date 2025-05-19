@@ -1,0 +1,12 @@
+﻿@model ESports_Models.OrderHeader
+
+@{
+    ViewData["Title"] = "Order Confirmation";
+}
+
+<div class="text-center text-white">
+    <h2>🎉 Payment Successful!</h2>
+    <p>Your order <strong>#@Model</strong> has been placed.</p>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Home</a>
+    <a asp-action="MyOrders" class="btn btn-secondary">View My Orders</a>
+</div>

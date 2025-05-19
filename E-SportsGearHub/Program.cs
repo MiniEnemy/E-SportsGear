@@ -13,45 +13,44 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Configure DbContext for SQL Server and ApplicationDbContext
+// Configure DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register Identity with custom ApplicationUser
+// Add Identity using ApplicationUser instead of IdentityUser
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// Configure application cookie settings
+// Configure cookie settings
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = $"/Identity/Account/Login";
-    options.LogoutPath = $"/Identity/Account/Logout";
-    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Logout";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
 });
 
-// Add Razor Pages for Identity
 builder.Services.AddRazorPages();
 
-// Register repositories
+// Register Repositories and UnitOfWork
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IOrderHeaderRepository, OrderHeaderRepository>();
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductVisitRepository, ProductVisitRepository>();
-
-// Add UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// Add EmailSender service
+// Register EmailSender
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
-// Stripe configuration
+// Configure Stripe settings
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
-// Build the app
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+// Configure middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -61,31 +60,25 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-// Stripe API Key for stripe transactions
-StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+// Initialize Stripe API Key globally
+var stripeSettings = builder.Configuration.GetSection("Stripe").Get<StripeSettings>();
+StripeConfiguration.ApiKey = stripeSettings.SecretKey;
 
-// Set up routing, authentication, and authorization
 app.UseRouting();
-app.UseAuthentication(); // Needed for Identity
+
+app.UseAuthentication();
 app.UseAuthorization();
 
-// Define area routing first
+// Area routing
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-// Define the default route for non-area controllers
+// Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
-
-
-
-// Map Razor Pages for Identity UI
 app.MapRazorPages();
 
 app.Run();

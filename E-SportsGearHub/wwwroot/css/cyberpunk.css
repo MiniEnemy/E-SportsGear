@@ -1,0 +1,35 @@
+﻿.cyber-container {
+    background-color: #0d0d0d;
+    padding: 2rem;
+    border: 2px solid #00ffe5;
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.cyber-header {
+    font-size: 2rem;
+    color: #00ffe5;
+    border-bottom: 2px dashed #00ffe5;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.cyber-table th, .cyber-table td {
+    border: 1px solid #00ffe5;
+    color: #ffffff;
+}
+
+.cyber-btn {
+    background: #00ffe5;
+    border: none;
+    color: #000;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+    .cyber-btn:hover {
+        background: #00ccbb;
+        color: #fff;
+    }

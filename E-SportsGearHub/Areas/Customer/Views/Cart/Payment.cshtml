@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-info">Redirecting to Payment...</h2>
+<hr />
+
+<p>Please wait while we redirect you to the payment gateway.</p>
+
+<p>If you're not redirected in a few seconds, <a href="/">click here</a>.</p>
+
+<script>
+    setTimeout(function () {
+        window.location.href = '@ViewBag.StripeUrl';
+    }, 2000);
+</script>

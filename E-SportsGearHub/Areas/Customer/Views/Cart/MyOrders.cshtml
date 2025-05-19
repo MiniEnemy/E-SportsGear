@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ESports_Models.ViewModels.OrderVM>
+
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+<link rel="stylesheet" href="~/css/Myorders.css" />
+
+<h2 class="text-white">My Orders</h2>
+
+<table class="table table-striped text-white">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Products</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Payment Status</th>
+            <th>Order Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderHeader.Id</td>
+                    <td>
+                        <ul>
+                            @foreach (var item in order.OrderDetails)
+                            {
+                                <li>@item.Product.ProductName (x@item.Count)</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>@order.OrderHeader.OrderDate.ToString("MM/dd/yyyy")</td>
+                    <td>₹@order.OrderHeader.OrderTotal.ToString("F2")</td>
+                    <td>@order.OrderHeader.PaymentStatus</td>
+                    <td>@order.OrderHeader.OrderStatus</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">No orders found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -13,13 +13,10 @@ namespace ESports_DataAccess.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductVisit> ProductVisits { get; set; }
-
-        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<OrderHeader> OrderHeaders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,6 +37,20 @@ namespace ESports_DataAccess.Data
             modelBuilder.Entity<OrderHeader>()
                 .Property(o => o.OrderTotal)
                 .HasColumnType("decimal(18,2)");
+
+            // Configure relationship between OrderDetail and Product
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(od => od.Product)
+                .WithMany()
+                .HasForeignKey(od => od.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure relationship between OrderDetail and OrderHeader
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(od => od.OrderHeader)
+                .WithMany(oh => oh.OrderDetails)
+                .HasForeignKey(od => od.OrderHeaderId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

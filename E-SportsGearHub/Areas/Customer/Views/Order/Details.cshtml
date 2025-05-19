@@ -1,65 +1,49 @@
-﻿@Model.OrderHeader.OrderStatus
+﻿@model ESports_Models.ViewModels.OrderVM
 
 @{
     ViewData["Title"] = "Order Details";
 }
 
-<div class="container mt-5">
-    <h2>Order Details (ID: @Model.Id)</h2>
+<h2>Order Details - @Model.OrderHeader.Id</h2>
 
-    <h4>User: @Model.ApplicationUser.Email</h4>
-    <p><strong>Order Date:</strong> @Model.OrderDate.ToString("dd MMM yyyy")</p>
-    <p><strong>Status:</strong> @Model.Status</p>
-    <p><strong>Payment Status:</strong> @Model.PaymentStatus</p>
+<div>
+    <h4>Order Info</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Order Date</dt>
+        <dd class="col-sm-10">@Model.OrderHeader.OrderDate.ToString("dd MMM yyyy")</dd>
 
-    <form asp-action="UpdateStatus" method="post" class="mb-4">
-        <input type="hidden" name="orderId" value="@Model.Id" />
+        <dt class="col-sm-2">Status</dt>
+        <dd class="col-sm-10">@Model.OrderHeader.OrderStatus</dd>
 
-        <div class="form-group">
-            <label>Status</label>
-            <select name="status" class="form-control" required>
-                <option value="Pending" selected="@Model.Status == " Pending"">Pending</option>
-                <option value="Processing" selected="@Model.Status == " Processing"">Processing</option>
-                <option value="Shipped" selected="@Model.Status == " Shipped"">Shipped</option>
-                <option value="Delivered" selected="@Model.Status == " Delivered"">Delivered</option>
-                <option value="Cancelled" selected="@Model.Status == " Cancelled"">Cancelled</option>
-                <option value="Approved" selected="@Model.Status == " Approved"">Approved</option>
-            </select>
-        </div>
+        <dt class="col-sm-2">Payment Status</dt>
+        <dd class="col-sm-10">@Model.OrderHeader.PaymentStatus</dd>
 
-        <div class="form-group">
-            <label>Payment Status</label>
-            <select name="paymentStatus" class="form-control" required>
-                <option value="Pending" selected="@Model.PaymentStatus == " Pending"">Pending</option>
-                <option value="Paid" selected="@Model.PaymentStatus == " Paid"">Paid</option>
-                <option value="Refunded" selected="@Model.PaymentStatus == " Refunded"">Refunded</option>
-                <option value="Cancelled" selected="@Model.PaymentStatus == " Cancelled"">Cancelled</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Update</button>
-    </form>
-
-    <h5>Products</h5>
-    <table class="table table-striped table-dark">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Count</th>
-                <th>Price</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.OrderDetails)
-            {
-                <tr>
-                    <td>@item.Product.ProductName</td>
-                    <td>@item.Count</td>
-                    <td>Rs. @item.Price</td>
-                    <td>Rs. @(item.Price* item.Count)</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        <dt class="col-sm-2">Total Amount</dt>
+        <dd class="col-sm-10">@Model.OrderHeader.OrderTotal.ToString("C")</dd>
+    </dl>
 </div>
+
+<h4>Items</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price per unit</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>@item.Product.ProductName</td>
+                <td>@item.Count</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@(item.Price* item.Count).ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-area="Customer" asp-controller="Order" asp-action="Index" class="btn btn-secondary mt-3">Back to Orders</a>

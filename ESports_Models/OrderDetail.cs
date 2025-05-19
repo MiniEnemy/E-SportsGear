@@ -5,20 +5,17 @@ namespace ESports_Models
 {
     public class OrderDetail
     {
-        [Key]
         public int Id { get; set; }
 
-        [ForeignKey("OrderHeader")]
         public int OrderHeaderId { get; set; }
-        public int OrderId { get; set; } 
+        [ForeignKey("OrderHeaderId")]
+        public OrderHeader OrderHeader { get; set; }
 
-        public virtual OrderHeader OrderHeader { get; set; }
-
-        [ForeignKey("Product")]
         public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        [ForeignKey("ProductId")]
+        public Product Product { get; set; }
 
         public int Count { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
     }
 }

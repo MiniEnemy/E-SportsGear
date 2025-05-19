@@ -40,7 +40,7 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
                     if (orderHeader != null)
                     {
                         orderHeader.PaymentStatus = Sd.PaymentStatusApproved;
-                        orderHeader.OrderStatus = Sd.StatusApproved;
+                        orderHeader.OrderStatus = Sd.PaymentStatusApproved;
                         orderHeader.PaymentIntentId = session.PaymentIntentId;
 
                         _unitOfWork.OrderHeader.Update(orderHeader);

@@ -1,0 +1,56 @@
+﻿@model ESports_Models.ViewModels.ShoppingCartVM
+
+@{
+    ViewData["Title"] = "Order Summary";
+}
+
+<h2>Order Summary</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Count</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ShoppingCartList)
+        {
+            <tr>
+                <td>@item.Product.ProductName</td>
+                <td>@item.Count</td>
+                <td>@item.Product.Price.ToString("C")</td>
+                <td>@(item.Count* item.Product.Price).ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Total: @Model.OrderHeader.OrderTotal.ToString("C")</h4>
+
+<form asp-action="SummaryPOST" method="post">
+    <div class="form-group">
+        <label>Phone</label>
+        <input asp-for="OrderHeader.PhoneNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Address</label>
+        <input asp-for="OrderHeader.StreetAddress" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>City</label>
+        <input asp-for="OrderHeader.City" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>State</label>
+        <input asp-for="OrderHeader.State" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Postal Code</label>
+        <input asp-for="OrderHeader.PostalCode" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Place Order</button>
+</form>

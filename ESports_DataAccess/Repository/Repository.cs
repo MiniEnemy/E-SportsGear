@@ -1,6 +1,7 @@
 ﻿using ESports_DataAccess.Data;
 using ESports_DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ContentModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,22 @@ namespace ESports_DataAccess.Repository
         {
             _context = context;
             _dbSet = _context.Set<T>();
+        }
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        {
+            IQueryable<T> query = _dbSet;
+
+            query = query.Where(filter);
+
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp.Trim());
+                }
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, string includeProperties = "")
@@ -65,11 +82,6 @@ namespace ESports_DataAccess.Repository
         {
             _dbSet.Remove(entity);
         }
-        public async Task RemoveRangeAsync(IEnumerable<T> entities)
-        {
-            _dbSet.RemoveRange(entities);
-            await _context.SaveChangesAsync();
-        }
 
         public async Task RemoveAsync(T entity)
         {
@@ -77,11 +89,15 @@ namespace ESports_DataAccess.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task RemoveRangeAsync(IEnumerable<T> entities)
+        {
+            _dbSet.RemoveRange(entities);
+            await _context.SaveChangesAsync();
+        }
 
         public void Update(T entity)
         {
             _dbSet.Update(entity);
         }
-
     }
 }
