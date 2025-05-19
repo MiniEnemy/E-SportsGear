@@ -1,0 +1,227 @@
+﻿/* E-Sports Gaming Theme CSS for Product Details Page */
+
+/* General Styling */
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background-color: #0f1923;
+    color: #e0e0e0;
+}
+
+h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: #00d8ff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #00d8ff;
+    padding-bottom: 0.5rem;
+}
+
+/* Product Details Container */
+.container.mt-4 {
+    background-color: #1a2530;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 216, 255, 0.15);
+    padding: 2rem;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem;
+}
+
+/* Product Image */
+.img-fluid {
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    border: 2px solid #2a3846;
+}
+
+    .img-fluid:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 216, 255, 0.25);
+    }
+
+/* Product Description */
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #b8b8b8;
+}
+
+    p strong {
+        color: #ffffff;
+    }
+
+    /* Price Display */
+    p:has(strong:contains("Price")) {
+        font-size: 1.3rem;
+        color: #ffffff;
+        background: linear-gradient(90deg, #1a2530, #2a3846);
+        padding: 0.75rem;
+        border-radius: 5px;
+        border-left: 4px solid #00d8ff;
+        margin: 1.5rem 0;
+    }
+
+/* Stock Status */
+.text-danger.fw-bold {
+    color: #ff3860 !important;
+    font-size: 1.2rem;
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background-color: rgba(255, 56, 96, 0.1);
+    border-radius: 4px;
+    border: 1px solid rgba(255, 56, 96, 0.3);
+}
+
+.text-success.fw-bold {
+    color: #39ff14 !important;
+    font-size: 1.2rem;
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background-color: rgba(57, 255, 20, 0.1);
+    border-radius: 4px;
+    border: 1px solid rgba(57, 255, 20, 0.3);
+}
+
+/* Form Elements */
+.form-group label {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.form-control {
+    background-color: #2a3846;
+    border: 2px solid #3a4856;
+    color: #ffffff;
+    font-family: 'Rajdhani', sans-serif;
+    border-radius: 5px;
+    padding: 0.6rem 1rem;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+    .form-control:focus {
+        border-color: #00d8ff;
+        box-shadow: 0 0 0 0.25rem rgba(0, 216, 255, 0.25);
+        background-color: #2a3846;
+        color: #ffffff;
+    }
+
+    .form-control:disabled {
+        background-color: #242d38;
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+/* Add to Cart Button */
+.btn-success {
+    background: linear-gradient(90deg, #00d8ff, #00a2ff);
+    border: none;
+    color: #0f1923;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+    .btn-success:hover:not(:disabled) {
+        background: linear-gradient(90deg, #00a2ff, #00d8ff);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-success:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    .btn-success:disabled {
+        background: linear-gradient(90deg, #767676, #999999);
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .btn-success i {
+        margin-right: 8px;
+    }
+
+/* Alert Messages */
+.alert {
+    border-radius: 5px;
+    font-weight: 500;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alert-danger {
+    background-color: rgba(255, 56, 96, 0.15);
+    color: #ff3860;
+    border-left: 4px solid #ff3860;
+}
+
+.alert-success {
+    background-color: rgba(57, 255, 20, 0.15);
+    color: #39ff14;
+    border-left: 4px solid #39ff14;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+    .container.mt-4 {
+        padding: 1rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .col-md-6:first-child {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Gaming-themed Animations */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 216, 255, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 216, 255, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 216, 255, 0);
+    }
+}
+
+.btn-success:not(:disabled):hover {
+    animation: pulse 1.5s infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a2530;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3a4856;
+    border-radius: 5px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #00d8ff;
+    }
