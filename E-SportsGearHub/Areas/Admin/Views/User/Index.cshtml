@@ -1,0 +1,42 @@
+﻿@using ESports_Models
+@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+<link rel="stylesheet" href="~/css/Indexorder.css" />
+<h1>Manage Users</h1>
+
+<table class="table table-striped" id="usersTable">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+                <td>
+                    <a asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-id="@user.Id" class="btn btn-sm btn-primary">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#usersTable').DataTable();
+        });
+    </script>
+}

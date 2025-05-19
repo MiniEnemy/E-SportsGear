@@ -11,6 +11,8 @@ namespace ESports_Models
         [ForeignKey("OrderHeaderId")]
         public OrderHeader OrderHeader { get; set; }
 
+
+
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public Product Product { get; set; }

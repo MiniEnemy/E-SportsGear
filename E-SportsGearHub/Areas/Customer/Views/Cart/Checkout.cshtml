@@ -5,7 +5,7 @@
 }
 
 <h2>Checkout</h2>
-
+<link rel="stylesheet" href="~/css/Indexorder.css" />
 <div class="row">
     <div class="col-md-6">
         <h4>Shipping Information</h4>
@@ -71,7 +71,7 @@
                         <td>@item.Product.ProductName</td>
                         <td>@item.Count</td>
                         <td>@item.Product.Price.ToString("C")</td>
-                        <td>@(item.Count* item.Product.Price).ToString("C")</td>
+                        <td>@(item.Count* item.Product.Price)</td>
                     </tr>
                 }
             </tbody>

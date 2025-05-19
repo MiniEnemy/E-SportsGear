@@ -20,6 +20,7 @@ namespace ESports_DataAccess.Repository
             OrderDetail = new OrderDetailRepository(_context);
             ProductVisit = new ProductVisitRepository(_context);
             Category = new CategoryRepository(_context);
+            ApplicationUser = new ApplicationUserRepository(_context);
         }
 
         public IProductRepository Product { get; private set; }
@@ -28,6 +29,8 @@ namespace ESports_DataAccess.Repository
         public IOrderDetailRepository OrderDetail { get; private set; }
         public IProductVisitRepository ProductVisit { get; private set; }
         public ICategoryRepository Category { get; private set; }
+        public IApplicationUserRepository ApplicationUser { get; private set; }
+
 
         public async Task SaveAsync()
         {

@@ -1,0 +1,26 @@
+﻿@model ESports_Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "User Details";
+}
+<link rel="stylesheet" href="~/css/UserDetails.css" />
+<h2>User Details</h2>
+
+<div class="card p-4">
+    <dl class="row">
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Model.Name</dd>
+
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Model.Email</dd>
+
+        <dt class="col-sm-2">Phone</dt>
+        <dd class="col-sm-10">@Model.PhoneNumber</dd>
+
+        <dt class="col-sm-2">Address</dt>
+        <dd class="col-sm-10">
+            @Model.StreetAddress, @Model.City, @Model.State - @Model.PostalCode
+        </dd>
+    </dl>
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
+</div>

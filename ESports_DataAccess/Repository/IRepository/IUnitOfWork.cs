@@ -11,6 +11,7 @@ namespace ESports_DataAccess.Repository.IRepository
         IOrderDetailRepository OrderDetail { get; }
 
         IProductVisitRepository ProductVisit { get; }
+        IApplicationUserRepository ApplicationUser { get; }
         ICategoryRepository Category { get; }
 
         Task SaveAsync();

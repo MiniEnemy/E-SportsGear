@@ -4,6 +4,7 @@
 @inject UserManager<ApplicationUser> UserManager
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -40,7 +41,7 @@
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="AboutUs">About Us</a>
                         </li>
 
-                        @if (User.IsInRole("Admin")) // Replace with Sd.Role_Admin if defined elsewhere
+                        @if (User.IsInRole("Admin")) // or use Sd.Role_Admin if you have it defined
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -54,6 +55,18 @@
                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <nav>
+                                            <ul class="list-unstyled ps-3 mb-0">
+                                                <li>
+                                                    <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">Manage Users</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Order" asp-action="Index">Manage Orders</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </li>
                                 </ul>
                             </li>
                         }
@@ -72,6 +85,11 @@
                                             <i class="bi bi-bag-check me-2"></i>My Orders
                                         </a>
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
+                                            <i class="bi bi-pencil-square me-2"></i>Edit Profile
+                                        </a>
+                                    </li>
                                     <li><hr class="dropdown-divider" /></li>
                                     <li>
                                         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "Customer" })" method="post" class="dropdown-item p-0">
@@ -81,6 +99,7 @@
                                         </form>
                                     </li>
                                 </ul>
+
                             </li>
                         }
                         else
@@ -158,5 +177,6 @@
             });
         });
     </script>
+
 </body>
 </html>

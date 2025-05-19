@@ -1,0 +1,76 @@
+﻿/* Custom theme for My Orders page */
+body {
+    background-color: #0c0c1d;
+    color: #ffffff;
+}
+h1, h4 ,h2,h3{
+    color: #f5f7f7;
+    font-size:2rem;
+}
+h2.text-white {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #00FFFF;
+    text-transform: uppercase;
+}
+
+/* Override Bootstrap table styles */
+.table {
+    width: 100%;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+    .table thead th {
+        background-color: #0c0c1d !important;
+        color: #00FFFF !important;
+        border-bottom: 1px solid #333 !important;
+        font-weight: 500;
+        text-transform: uppercase;
+        padding: 1rem;
+        vertical-align: bottom;
+    }
+
+    .table tbody tr {
+        background-color: #0c0c1d !important;
+    }
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #1a1a2e !important;
+}
+
+.table tbody td {
+    padding: 1rem;
+    border-bottom: 1px solid #333;
+    color: #ffffff !important;
+    background-color: transparent !important;
+}
+
+/* Fix for white background in table cells */
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: transparent !important;
+    --bs-table-accent-bg: transparent !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) > * {
+    background-color: transparent !important;
+    --bs-table-accent-bg: transparent !important;
+}
+
+/* Fix for hover state */
+.table tbody tr:hover {
+    background-color: #1a1a40 !important;
+}
+
+/* Make sure text is white */
+.text-white {
+    color: #ffffff !important;
+}
+
+/* Center aligned text */
+.text-center {
+    text-align: center;
+}

@@ -1,0 +1,193 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+/* Delete Category Page - Cyberpunk Theme */
+body {
+    background-color: #151a30;
+    font-family: 'Rajdhani', sans-serif;
+    color: #b8b8b8;
+}
+
+form {
+    background-color: #2a3354 !important;
+    border: 1px solid rgba(0, 229, 255, 0.2) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+    max-width: 600px !important;
+    margin: 40px auto !important;
+    padding: 30px !important;
+    position: relative;
+    overflow: hidden;
+}
+
+    form::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #ff3860, #00e5ff);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.7);
+    }
+
+h2 {
+    color: #ff3860 !important;
+    font-family: 'Orbitron', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    text-shadow: 0 0 10px rgba(255, 56, 96, 0.5) !important;
+    margin-bottom: 30px !important;
+    padding-bottom: 10px !important;
+    border-bottom: 1px solid rgba(255, 56, 96, 0.3) !important;
+}
+
+p.text-muted {
+    color: #b8b8b8 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    margin-bottom: 20px !important;
+}
+
+.form-label {
+    color: #00e5ff !important;
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    margin-bottom: 8px !important;
+}
+
+.form-control {
+    background-color: #1a2040 !important;
+    border: 1px solid rgba(0, 229, 255, 0.3) !important;
+    border-radius: 5px !important;
+    color: #ffffff !important;
+    font-family: 'Rajdhani', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    padding: 12px 15px !important;
+    transition: all 0.3s ease !important;
+}
+
+    .form-control:disabled {
+        opacity: 0.7 !important;
+        background-color: #1a2040 !important;
+        color: #b8b8b8 !important;
+        border: 1px solid rgba(184, 184, 184, 0.3) !important;
+    }
+
+.btn {
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    padding: 12px 25px !important;
+    border: none !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+    .btn::before {
+        content: '' !important;
+        position: absolute !important;
+        top: -2px !important;
+        left: -2px !important;
+        right: -2px !important;
+        bottom: -2px !important;
+        z-index: -1 !important;
+        opacity: 0 !important;
+        transition: opacity 0.3s ease !important;
+    }
+
+.btn-danger {
+    background-color: #151a30 !important;
+    color: #ff3860 !important;
+    border: 1px solid #ff3860 !important;
+    box-shadow: 0 4px 15px rgba(255, 56, 96, 0.2) !important;
+}
+
+    .btn-danger::before {
+        background: linear-gradient(45deg, #ff3860, transparent, #ff3860) !important;
+    }
+
+    .btn-danger:hover {
+        background-color: rgba(255, 56, 96, 0.1) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 7px 20px rgba(255, 56, 96, 0.3) !important;
+    }
+
+        .btn-danger:hover::before {
+            opacity: 0.5 !important;
+        }
+
+.btn-secondary {
+    background-color: #151a30 !important;
+    color: #b8b8b8 !important;
+    border: 1px solid #b8b8b8 !important;
+}
+
+    .btn-secondary::before {
+        background: linear-gradient(45deg, #b8b8b8, transparent, #b8b8b8) !important;
+    }
+
+    .btn-secondary:hover {
+        background-color: rgba(184, 184, 184, 0.1) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 7px 20px rgba(0, 0, 0, 0.2) !important;
+    }
+
+        .btn-secondary:hover::before {
+            opacity: 0.3 !important;
+        }
+
+.mb-3 {
+    margin-bottom: 20px !important;
+}
+
+.mt-4 {
+    margin-top: 30px !important;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.justify-content-between {
+    justify-content: space-between !important;
+}
+
+/* Warning Animation for Delete */
+@keyframes warningPulse {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 56, 96, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(255, 56, 96, 0.5);
+    }
+
+    100% {
+        box-shadow: 0 0 10px rgba(255, 56, 96, 0.3);
+    }
+}
+
+.btn-danger {
+    animation: warningPulse 2s infinite;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    form {
+        margin: 20px 15px !important;
+        padding: 25px 20px !important;
+    }
+
+    .btn {
+        padding: 10px 20px !important;
+        font-size: 13px !important;
+    }
+}

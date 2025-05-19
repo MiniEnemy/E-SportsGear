@@ -1,0 +1,47 @@
+﻿@model ESports_Models.OrderHeader
+
+
+@{
+    ViewData["Title"] = "Order Details";
+    var orderDetails = ViewBag.OrderDetails as IEnumerable<ESports_Models.OrderDetail>;
+}
+
+<h1>Order Details - #@Model.Id</h1>
+<link rel="stylesheet" href="~/css/Indexorder.css" />
+<div>
+    <h4>Customer Information</h4>
+    <p>Name: @Model.ApplicationUser?.Name</p>
+    <p>Email: @Model.ApplicationUser?.Email</p>
+    <p>Phone: @Model.ApplicationUser?.PhoneNumber</p>
+    <p>Order Date: @Model.OrderDate.ToString("f")</p>
+    <p>Status: @Model.OrderStatus</p>
+
+    <p>Total: @Model.OrderTotal.ToString("C")</p>
+</div>
+
+<hr />
+
+<h4>Products</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in orderDetails)
+        {
+            <tr>
+                <td>@item.Product.ProductName</td>
+                <td>@item.Count</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@(item.Count* item.Price)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn btn-secondary">Back to Orders</a>

@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿
 using ESports_Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace ESports_DataAccess.Data
 {
@@ -17,6 +18,8 @@ namespace ESports_DataAccess.Data
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +31,11 @@ namespace ESports_DataAccess.Data
                 new Category { Id = 2, Name = "Mouse", DisplayOrder = 2 },
                 new Category { Id = 3, Name = "Keyboard", DisplayOrder = 3 }
             );
+            modelBuilder.Entity<OrderDetail>()
+    .HasOne(od => od.OrderHeader)
+    .WithMany(oh => oh.OrderDetails)
+    .HasForeignKey("OrderHeaderId");
+
 
             // Precision for financial fields
             modelBuilder.Entity<OrderDetail>()

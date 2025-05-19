@@ -12,5 +12,9 @@ namespace ESports_DataAccess.Repository
         {
             _context = context;
         }
+        public void Update(ApplicationUser user)
+        {
+            _context.ApplicationUsers.Update(user);
+        }
     }
 }
