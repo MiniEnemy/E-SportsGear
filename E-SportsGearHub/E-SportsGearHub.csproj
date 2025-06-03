@@ -38,4 +38,8 @@
     <ProjectReference Include="..\ESports_Models\ESports_Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\carousel\" />
+  </ItemGroup>
+
 </Project>
