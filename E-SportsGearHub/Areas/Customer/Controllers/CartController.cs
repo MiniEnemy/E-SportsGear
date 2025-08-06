@@ -42,6 +42,9 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
                 OrderHeader = new OrderHeader(),
                 ShoppingCartList = cartItems.ToList()
             };
+            shoppingCartVM.OrderHeader.OrderTotal = shoppingCartVM.ShoppingCartList
+                .Sum(item => item.Product.Price * item.Count);
+
 
             return View(shoppingCartVM);
         }
@@ -95,14 +98,10 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Plus(int cartId)
         {
-            var cartItem = await _unitOfWork.ShoppingCart.GetAsync(c => c.Id == cartId, includeProperties: "Product");
-
-            if (cartItem != null && cartItem.Product.Stock > cartItem.Count)
-            {
-                cartItem.Count++;
-                _unitOfWork.ShoppingCart.Update(cartItem);
-                await _unitOfWork.SaveAsync();
-            }
+            var cart = await _unitOfWork.ShoppingCart.GetAsync(u => u.Id == cartId);
+            cart.Count += 1;
+            await _unitOfWork.SaveAsync();
+            return RedirectToAction(nameof(Index));
 
             return RedirectToAction(nameof(Index));
         }
@@ -111,23 +110,18 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Minus(int cartId)
         {
-            var cartItem = await _unitOfWork.ShoppingCart.GetAsync(c => c.Id == cartId);
+            var cart = await _unitOfWork.ShoppingCart.GetAsync(u => u.Id == cartId);
 
-            if (cartItem != null)
+            if (cart.Count <= 1)
             {
-                if (cartItem.Count <= 1)
-                {
-                    _unitOfWork.ShoppingCart.Remove(cartItem);
-                }
-                else
-                {
-                    cartItem.Count--;
-                    _unitOfWork.ShoppingCart.Update(cartItem);
-                }
-
-                await _unitOfWork.SaveAsync();
+                _unitOfWork.ShoppingCart.Remove(cart);
+            }
+            else
+            {
+                cart.Count -= 1;
             }
 
+            await _unitOfWork.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -135,15 +129,11 @@ namespace E_SportsGearHub.Areas.Customer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Remove(int cartId)
         {
-            var cartItem = await _unitOfWork.ShoppingCart.GetAsync(c => c.Id == cartId);
-
-            if (cartItem != null)
-            {
-                _unitOfWork.ShoppingCart.Remove(cartItem);
-                await _unitOfWork.SaveAsync();
-            }
-
+            var cart = await _unitOfWork.ShoppingCart.GetAsync(u => u.Id == cartId);
+            _unitOfWork.ShoppingCart.Remove(cart);
+            await _unitOfWork.SaveAsync();
             return RedirectToAction(nameof(Index));
+
         }
 
         public async Task<IActionResult> Checkout()
